@@ -11,7 +11,6 @@ function RouterC() {
           <Route exact path="/" element={<App />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          {/* <Route component={NotFound} /> */}
         </Routes>
       </BrowserRouter>
     );
