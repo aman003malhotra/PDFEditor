@@ -1,7 +1,7 @@
 //import useState hook to create menu collapse state
 import React, { useState } from "react";
 import './MenuC.css';
-
+import authServices from "../services/auth-services";
 //import react pro sidebar components
 import {
   ProSidebar,
@@ -22,19 +22,26 @@ import {IoIosPaper} from 'react-icons/io'
 
 //import sidebar css from react-pro-sidebar module and our custom css 
 import "react-pro-sidebar/dist/css/styles.css";
+import { Link } from "react-router-dom";
 
 
 const MenuC = () => {
   
         //create initial menuCollapse state using useState hook
-        const [menuCollapse, setMenuCollapse] = useState(false)
+        const [menuCollapse, setMenuCollapse] = useState(false);
+        const [username, setUsername] = useState('');
 
         //create a custom function that will change menucollapse state from false to true and true to false
       // const menuIconClick = () => {
       //   //condition checking to change state from true to false and vice versa
       //   menuCollapse ? setMenuCollapse(false) : setMenuCollapse(true);
       // };
-    
+
+      const handleLogout = () => {
+        authServices.logout();
+        window.location.href = '/login';
+      }
+      // setUsername(authServices.getCurrentUser().username);
       return (
         <>
           <div id="header">
@@ -43,16 +50,14 @@ const MenuC = () => {
               <SidebarHeader>
               <div className="logotext">
                   {/* small and big change using menucollapse state */}
-                  <p>{"Big Logo"}</p>
+                  <p>PDF Editor Pro</p>
                 </div>
               </SidebarHeader>
               <SidebarContent>
                 <Menu iconShape="square">
-                  <MenuItem active={true} icon={<FiHome />}>
-                    Home
-                  </MenuItem>
-                  <MenuItem icon={<GiPapers />}>My Papers</MenuItem>
-                  <MenuItem icon={<IoIosPaper />}>Evaluation</MenuItem>
+                  <MenuItem active={true} icon={<FiHome />}><Link to="/">Home</Link></MenuItem>
+                  <MenuItem icon={<GiPapers />}><Link to="listpdf">My Papers</Link></MenuItem>
+                  <MenuItem icon={<IoIosPaper />}><Link to="addPdf">Evaluation</Link></MenuItem>
                   <MenuItem icon={<IoNewspaperOutline />}>Re-Evaluation</MenuItem>
                   <MenuItem icon={<HiOutlineDocumentReport />}>Reports</MenuItem>
                   <MenuItem icon={<FaHistory />}>History</MenuItem>
@@ -60,8 +65,8 @@ const MenuC = () => {
               </SidebarContent>
               <SidebarFooter>
                 <Menu iconShape="square">
-                  <MenuItem>Aman</MenuItem>
-                  <MenuItem icon={<FiLogOut />}></MenuItem>
+                  <MenuItem>{authServices.getCurrentUser().username}</MenuItem>
+                  <MenuItem icon={<FiLogOut />} onClick={handleLogout}></MenuItem>
                 </Menu>
               </SidebarFooter>
             </ProSidebar>

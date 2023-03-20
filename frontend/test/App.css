@@ -1,3 +1,5 @@
 .app{
     width:calc(100% - 220px);
+    left:220px;
+    position: relative;
 }

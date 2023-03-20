@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import './Login.css';
+import authServices from './services/auth-services';
+import { Navigate, Link } from "react-router-dom";
 
 function Login() {
     const [email, setEmail] = useState('');
@@ -17,9 +19,18 @@ function Login() {
     const handleSubmit = (event) => {
       event.preventDefault();
       // Add login logic here
+      if(email != '' && password != ''){
+        authServices.login(email, password)
+        .then((res) => 
+        {
+          console.log(res);
+          window.location.href = '/';
+        });
+      }
     };
   
     return (
+      <div className="wrap">
       <div className="box">
       <form onSubmit={handleSubmit}>
         <h2>Log In</h2>
@@ -34,11 +45,11 @@ function Login() {
           <i></i>
         </div>
         <div className="links">
-          <a href="#">Forgot Password ?</a>
-          <a href="#">Signup</a>
+          <Link to="/signup">Does not have an account Signup</Link>
         </div>
         <input type="submit" value="Login"/>
       </form>
+    </div>
     </div>
     );
   }

@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cors = require("cors");
 
 const User = require('./models/User');
 
@@ -10,8 +11,8 @@ const User = require('./models/User');
 
 const app = express();
 app.use(bodyParser.json());
-
-mongoose.connect('mongodb://localhost/mydatabase', {
+app.use(cors());
+mongoose.connect('mongodb://localhost:27017/pdfeditor', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -50,7 +51,7 @@ try {
         return res.status(401).send('Invalid email or password');
     }
     const token = jwt.sign({ userId: user._id, username:user.username }, 'mysecretkey');
-    res.send({ token });
+    res.send({ token, username:user.username, id:user._id   });
 } catch (error) {
     console.log(error);
     res.status(500).send('An error occurred while logging in');
