@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
     cb(null, 'public/')
   },
   filename: function (req, file, cb) {
-    cb(null, uuidv4() + "sec_"+file.originalname);
+    cb(null, uuidv4() + "_"+file.originalname);
   }
 })
 const upload = multer({storage: storage})

@@ -66,7 +66,7 @@ const MenuC = () => {
               <SidebarFooter>
                 <Menu iconShape="square">
                   <MenuItem>{authServices.getCurrentUser().username}</MenuItem>
-                  <MenuItem icon={<FiLogOut />} onClick={handleLogout}></MenuItem>
+                  <MenuItem icon={<FiLogOut />} onClick={handleLogout}>Logout</MenuItem>
                 </Menu>
               </SidebarFooter>
             </ProSidebar>

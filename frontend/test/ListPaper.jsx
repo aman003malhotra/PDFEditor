@@ -26,7 +26,7 @@ const ListPaper = () => {
 
         {pdfData &&
             pdfData.map(oneData => (
-                <li key={oneData._id}>{oneData.filename.split('sec_').pop()}</li>
+                <li key={oneData._id}>{oneData.filename.replace(/^[^_]*_/, "")}</li>
             ))
         }
     </div>
