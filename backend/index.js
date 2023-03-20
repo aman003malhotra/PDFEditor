@@ -7,6 +7,7 @@ const cors = require("cors");
 const { v4: uuidv4 } = require('uuid');
 const User = require('./models/User');
 const Pdf = require('./models/pdfSchema');
+const Annotation = require('./models/annotationSchema');
 
 
 const app = express();
@@ -25,7 +26,7 @@ const storage = multer.diskStorage({
 })
 const upload = multer({storage: storage})
 
-mongoose.connect('mongodb://localhost:27017/pdfeditor', {
+mongoose.connect('mongodb+srv://aman003malhotra:Aman123@cluster0.hcbyp.mongodb.net/pdfEditor?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -100,6 +101,31 @@ app.get('/allfiles/:user_id', async (req, res) => {
     res.status(500).send("unable to fetch data right now");
   }
 });
+
+app.get('/get_all_annotation/:filename', async(req,res) => {
+    console.log(req.params);
+    const anno = await Annotation.find({filename:req.params.filename});
+    res.status(200).send(anno);
+})
+
+app.post('/add_annotation', async(req,res) => {
+  console.log(req.body);
+  const anno = new Annotation({annotation:req.body.annotation ,filename: req.body.filename, ann_id:req.body.id});
+  await anno.save();
+  res.status(200).send('Annotation saved successfully')
+})
+
+app.post('/delete_annotation', async(req,res) => {
+  console.log(req.body.id);
+  const anno = await Annotation.deleteOne({ ann_id:req.body.id});
+  res.status(200).send('Annotation deleted successfully');
+})
+
+app.post('/update_annotation', async(req,res) => {
+  console.log(req.body);
+  const anno = await Annotation.updateOne({ ann_id: req.body.id}, { annotation: req.body.updated });
+  res.status(200).send(anno);
+})
 
 const port = 5000;
 app.listen(port, () => {

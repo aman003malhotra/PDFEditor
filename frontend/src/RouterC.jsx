@@ -12,8 +12,8 @@ function RouterC() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />} >
-            <Route index element={<PDFComponent/>}/>
-            <Route path='addPdf' element={<AddPdf/>}/>
+            <Route index element={<AddPdf/>}/>
+            <Route path='addPdf' element={<PDFComponent/>}/>
             <Route path='listpdf' element={<ListPaper/>}/>
           </Route>
           <Route path="/login" element={<Login />} />

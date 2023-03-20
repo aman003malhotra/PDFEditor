@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from "axios";
 import authServices from './services/auth-services';
+import fileServices from './services/file-services';
 const AddPdf = () => {
 
     const [selectedFile, setSelectedFile] = useState(null);
@@ -11,15 +12,11 @@ const AddPdf = () => {
         const data = new FormData()
         data.append('pdfFile', selectedFile, selectedFile.name);
         data.append('user_id', authServices.getCurrentUser().id);
-        axios
-        .post("http://localhost:5000/file-upload", data, {
-            onUploadProgress: ProgressEvent => {
-                setLoaded(ProgressEvent.loaded / ProgressEvent.total*100);
-            },
+        fileServices.addNewFile(data)
+        .then(res=> {
+            console.log(res);
+            window.location.href = '/listpdf';
         })
-        .then(res => {
-            console.log(res.statusText)
-        })    
     }
 
     const handleSelectedFile = (event) => {

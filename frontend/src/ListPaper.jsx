@@ -20,6 +20,7 @@ const ListPaper = () => {
         })
     }, []);
     console.log(pdfData);
+    localStorage.setItem('selected_pdf', 'compressed.tracemonkey-pldi-09');
   return (
     <div style={{textAlign:'center'}}>
         <p>{(data.length == 0) && 'There are not Pdfs uploaded'}</p>

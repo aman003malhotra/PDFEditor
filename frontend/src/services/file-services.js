@@ -13,6 +13,18 @@ class FileService {
         console.log(err);
       })
   }
+
+  addNewFile(data){
+    return axios
+      .post(API_URL + "file-upload", data)
+      .then(res => {
+          return res;
+      }) 
+  }
+
+
+
+  
 }
 
 export default new FileService();
