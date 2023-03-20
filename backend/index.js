@@ -4,14 +4,27 @@ const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require("cors");
-
+const { v4: uuidv4 } = require('uuid');
 const User = require('./models/User');
-
+const Pdf = require('./models/pdfSchema');
 
 
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
+app.use(express.static(__dirname + '/public'));
+
+const multer  = require('multer')
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, uuidv4() + "_"+file.originalname);
+  }
+})
+const upload = multer({storage: storage})
+
 mongoose.connect('mongodb://localhost:27017/pdfeditor', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -56,6 +69,36 @@ try {
     console.log(error);
     res.status(500).send('An error occurred while logging in');
 }
+});
+
+
+
+app.post('/file-upload', upload.single('pdfFile') , async (req, res) => {
+    console.log(req.file);
+    
+    if(req.file.mimetype === 'application/pdf'){
+      const fileName = req.file.filename;
+      const user_id = req.body.user_id;
+      const pdf = new Pdf({
+        user: user_id,
+        filename: fileName
+      });
+      await pdf.save();
+      res.status(200).send('File Saved Successfully')
+    }else{
+      res.status(401).send('Invalid File Type');
+    }
+});
+
+
+app.get('/allfiles/:user_id', async (req, res) => {
+  try{
+    const data = await Pdf.find({ user: req.params.user_id });
+    res.status(200).send(data);
+  }
+  catch{
+    res.status(500).send("unable to fetch data right now");
+  }
 });
 
 const port = 5000;
