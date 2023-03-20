@@ -22,7 +22,13 @@ class FileService {
       }) 
   }
 
-
+  deleteFile(id){
+    return axios
+      .post(API_URL + "file-delete", id)
+      .then(res => {
+        return res;
+      })
+      }
 
   
 }

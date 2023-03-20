@@ -91,6 +91,16 @@ app.post('/file-upload', upload.single('pdfFile') , async (req, res) => {
     }
 });
 
+app.post('/file-delete', async(req,res) => {
+  console.log('dede')
+  try{
+    const data = await Pdf.deleteOne({ _id: req.body.id });
+    res.status(200).send(data);
+  }
+  catch{
+    res.status(500).send("unable to delete file right now");
+  }
+})
 
 app.get('/allfiles/:user_id', async (req, res) => {
   try{

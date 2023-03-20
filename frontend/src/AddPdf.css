@@ -1,0 +1,21 @@
+input[type="submit"]{
+    width: auto !important;
+}
+.inputBox input{
+    color: white !important;
+}
+.box::before{
+    background: linear-gradient(0deg,transparent,#FED52A,#FED52A);
+}
+.box::after{
+    background: linear-gradient(0deg,transparent,#FED52A,#FED52A);
+}
+h2{
+    color:#FED52A;
+}
+.inputBox i{
+    background: #FED52A;
+}
+input[type="submit"]{
+    background-color: #FED52A;
+}

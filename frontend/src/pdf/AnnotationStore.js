@@ -12,7 +12,7 @@ export default class AnnotationStore {
 
   createAnnotation(annotation) {
     let id = annotation.id;
-    let filename = localStorage.getItem('selected_pdf') + ".pdf";
+    let filename = localStorage.getItem('selected_pdf');
     let string_annotation = JSON.stringify(annotation);
     annotationService.add(string_annotation,id,filename)
     .then(res => {

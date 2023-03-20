@@ -1,6 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import fileServices from './services/file-services'
 import authServices from './services/auth-services'
+import './ListPaper.css'
+import { AiTwotoneDelete } from 'react-icons/Ai';
+import { GiExitDoor } from 'react-icons/gi';
+
 const ListPaper = () => {
 
     const [data, setData] = useState([]);
@@ -19,18 +23,41 @@ const ListPaper = () => {
             }
         })
     }, []);
-    console.log(pdfData);
-    localStorage.setItem('selected_pdf', 'compressed.tracemonkey-pldi-09');
-  return (
-    <div style={{textAlign:'center'}}>
-        <p>{(data.length == 0) && 'There are not Pdfs uploaded'}</p>
+    
+    const handleOpen = (filename) => {
+        localStorage.setItem('selected_pdf', filename);
+        window.location.href = '/addPdf';
+    }
 
+    const handleDelete = (id) => {
+        console.log("delete")
+        fileServices.deleteFile(id)
+        .then(res => {
+            console.log('deleted');
+        })
+    }
+  return (
+    <>
+    
+    <div className="box1">
+    <p>{(data.length == 0) && 'There are not Pdfs uploaded'}</p>
         {pdfData &&
             pdfData.map(oneData => (
-                <li key={oneData._id}>{oneData.filename.replace(/^[^_]*_/, "")}</li>
+                <>
+                <div className="boxes" key={oneData._id}>
+                    <img src="./file-svg.png" alt="" />
+                    <h5>{oneData.filename.replace(/^[^_]*_/, "")}</h5>
+                    <div className="btn">
+                    <button onClick={() => handleOpen(oneData.filename)}><GiExitDoor/><span className='svg-open'> Open</span></button>
+                    <button onClick={() => handleDelete(oneData._id)}><AiTwotoneDelete/><span className='svg-open'>Delete</span></button>
+                    </div>
+                </div>
+                {/* <li key={oneData._id}>{oneData.filename.replace(/^[^_]*_/, "")}</li> */}
+                </>
             ))
         }
-    </div>
+      </div>
+      </>
   )
 }
 
