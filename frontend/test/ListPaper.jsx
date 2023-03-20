@@ -4,11 +4,13 @@ import authServices from './services/auth-services'
 const ListPaper = () => {
 
     const [data, setData] = useState([]);
+    const [pdfData, setPdfData] = useState();
         
     useEffect(() => {
         fileServices.getfiles(authServices.getCurrentUser().id)
         .then(res => {
             if(res.length != 0){
+                setPdfData(res);
                 const datArr = [];
                 for(let i=0;i<res.length;i++){
                     datArr.push(res[i].filename);
@@ -17,17 +19,16 @@ const ListPaper = () => {
             }
         })
     }, []);
+    console.log(pdfData);
   return (
     <div style={{textAlign:'center'}}>
         <p>{(data.length == 0) && 'There are not Pdfs uploaded'}</p>
 
-        <ul>
-            {
-                data.map(onData => {
-                    <li>{onData}</li>
-                })
-            }
-        </ul>
+        {pdfData &&
+            pdfData.map(oneData => (
+                <li key={oneData._id}>{oneData.filename.split('sec_').pop()}</li>
+            ))
+        }
     </div>
   )
 }
