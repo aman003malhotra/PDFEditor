@@ -46,6 +46,7 @@ const MenuC = () => {
       const handleLogout = () => {
         authServices.logout();
         window.location.href = '/login';
+        return false;
       }
       // setUsername(authServices.getCurrentUser().username);
       return (

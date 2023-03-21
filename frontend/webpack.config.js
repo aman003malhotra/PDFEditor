@@ -1,6 +1,7 @@
 const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   entry: {
@@ -57,12 +58,17 @@ module.exports = {
     static: './public',
     hot: true,
     port: 3000,
-    historyApiFallback:true,
+    historyApiFallback:true
   },
   plugins: [
     new HtmlWebpackPlugin({
       inject: 'head',
       template: './public/index.html'
-    })
+    }),
+    new CopyPlugin({
+      patterns: [
+          { from: "./public", to: "" } //to the dist root directory
+      ],
+    }),
   ]
 };

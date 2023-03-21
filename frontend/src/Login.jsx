@@ -26,6 +26,7 @@ function Login() {
         .then((res) => 
         {
           window.location.href = '/';
+          return false;
         })
         .catch((err) => {
           setErrorMessage(err.response.data);
@@ -33,7 +34,7 @@ function Login() {
         })
       }else{
         setErrorMessage("Please fill all the values");
-        setError(true);
+        setErr(true);
       }
     };
     const handleClose = () =>{
