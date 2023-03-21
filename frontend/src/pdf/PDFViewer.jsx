@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import * as PDFJS from 'pdfjs-dist/legacy/build/pdf';
 import Connections from '@recogito/recogito-connections';
-
-import EndlessViewer from './endless/EndlessViewer';
 import PaginatedViewer from './paginated/PaginatedViewer';
 import Store from './AnnotationStore';
 
@@ -62,18 +60,7 @@ const PDFViewer = props => {
     props.onCancelSelected && props.onCancelSelected(a);
   }
 
-  return pdf ? 
-    // props.mode === 'scrolling' ? 
-    //   <EndlessViewer
-    //     {...props}
-    //     pdf={pdf}
-    //     store={store}
-    //     connections={connections}
-    //     onCreateAnnotation={onCreateAnnotation}
-    //     onUpdateAnnotation={onUpdateAnnotation}
-    //     onDeleteAnnotation={onDeleteAnnotation} 
-    //     onCancelSelected={onCancelSelected} /> :
-      
+  return pdf ?
       <PaginatedViewer 
         {...props}
         pdf={pdf}
@@ -84,7 +71,7 @@ const PDFViewer = props => {
         onDeleteAnnotation={onDeleteAnnotation} 
         onCancelSelected={onCancelSelected} />
     
-    : null;
+    : <div className="nopdf"><div>Please Add a new PDF or select a PDF from My Papers or the selected PDF has a password.Please remove the password before uploading.</div></div>;
 
 }
 

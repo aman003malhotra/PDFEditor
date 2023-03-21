@@ -7,6 +7,7 @@ const cors = require("cors");
 const { v4: uuidv4 } = require('uuid');
 const User = require('./models/User');
 const Pdf = require('./models/pdfSchema');
+const Annotation = require('./models/annotationSchema');
 
 
 const app = express();
@@ -25,7 +26,7 @@ const storage = multer.diskStorage({
 })
 const upload = multer({storage: storage})
 
-mongoose.connect('mongodb://localhost:27017/pdfeditor', {
+mongoose.connect('mongodb+srv://aman003malhotra:Aman123@cluster0.hcbyp.mongodb.net/pdfEditor?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -36,7 +37,6 @@ app.get('/', (req, res) => {
 });
 
 app.post('/signup', async (req, res) => {
-    console.log(req.body);
     try {
       const hashedPassword = await bcrypt.hash(req.body.password, 10);
       const user = new User({
@@ -48,7 +48,6 @@ app.post('/signup', async (req, res) => {
       const token = jwt.sign({ userId: user._id }, 'mysecretkey');
       res.send({ token });
     } catch (error) {
-      console.log(error);
       res.status(500).send('An error occurred while signing up');
     }
   });
@@ -66,16 +65,13 @@ try {
     const token = jwt.sign({ userId: user._id, username:user.username }, 'mysecretkey');
     res.send({ token, username:user.username, id:user._id   });
 } catch (error) {
-    console.log(error);
     res.status(500).send('An error occurred while logging in');
 }
 });
 
 
 
-app.post('/file-upload', upload.single('pdfFile') , async (req, res) => {
-    console.log(req.file);
-    
+app.post('/file-upload', upload.single('pdfFile') , async (req, res) => {    
     if(req.file.mimetype === 'application/pdf'){
       const fileName = req.file.filename;
       const user_id = req.body.user_id;
@@ -90,6 +86,17 @@ app.post('/file-upload', upload.single('pdfFile') , async (req, res) => {
     }
 });
 
+app.post('/file-delete', async(req,res) => {
+  try{
+    const data = await Pdf.deleteOne({ filename: req.body.filename });
+    res.status(200).send("file deleted successfully");
+  }catch{
+    res.status(500).send("unable to fetch data right now");
+  }
+    
+    
+    
+})
 
 app.get('/allfiles/:user_id', async (req, res) => {
   try{
@@ -100,6 +107,27 @@ app.get('/allfiles/:user_id', async (req, res) => {
     res.status(500).send("unable to fetch data right now");
   }
 });
+
+app.get('/get_all_annotation/:filename', async(req,res) => {
+    const anno = await Annotation.find({filename:req.params.filename});
+    res.status(200).send(anno);
+})
+
+app.post('/add_annotation', async(req,res) => {
+  const anno = new Annotation({annotation:req.body.annotation ,filename: req.body.filename, ann_id:req.body.id});
+  await anno.save();
+  res.status(200).send('Annotation saved successfully')
+})
+
+app.post('/delete_annotation', async(req,res) => {
+  const anno = await Annotation.deleteOne({ ann_id:req.body.id});
+  res.status(200).send('Annotation deleted successfully');
+})
+
+app.post('/update_annotation', async(req,res) => {
+  const anno = await Annotation.updateOne({ ann_id: req.body.id}, { annotation: req.body.updated });
+  res.status(200).send(anno);
+})
 
 const port = 5000;
 app.listen(port, () => {

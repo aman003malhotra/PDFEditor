@@ -1,4 +1,5 @@
 /** A minimal local annotation store **/
+import annotationService from "../services/annotation-service";
 export default class AnnotationStore {
 
   constructor() {
@@ -10,17 +11,32 @@ export default class AnnotationStore {
   }
 
   createAnnotation(annotation) {
+    let id = annotation.id;
+    let filename = localStorage.getItem('selected_pdf');
+    let string_annotation = JSON.stringify(annotation);
+    annotationService.add(string_annotation,id,filename)
+    .then(res => {
+      return res;
+    });
     this._annotations.push(annotation);
   }
 
   updateAnnotation(updated, previous) {
-    this._annotations = this._annotations.map(a => 
-      a.id === previous.id ? updated : a);
+    let updated_annotation = JSON.stringify(updated);
+    annotationService.updateAnno(previous.id, updated_annotation)
+    .then(res => {
+      this._annotations = this._annotations.map(a => 
+        a.id === previous.id ? updated : a);
+      });
   }
 
   deleteAnnotation(annotation) {
-    this._annotations = this._annotations.filter(a => 
-      a.id !== annotation.id);
+    annotationService.deleteAnno(annotation.id)
+    .then(res => {
+      this._annotations = this._annotations.filter(a => 
+        a.id !== annotation.id);
+    })
+    
   }
 
   getAnnotations(pageNumber) {

@@ -117,3 +117,11 @@ header label {
 .r6o-connections-editor {
   z-index:4;
 }
+
+.nopdf{
+  text-align: center;
+  justify-items: center;
+  width: 100% !important ;
+  height:100vh;
+  font-size: 36px;
+}

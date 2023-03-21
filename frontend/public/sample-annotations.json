@@ -76,5 +76,26 @@
     },
     "@context": "http://www.w3.org/ns/anno.jsonld",
     "id": "#068333e8-2616-4a90-883d-27c8595a806a"
+  },
+  {
+    "@context": "http://www.w3.org/ns/anno.jsonld",
+    "type": "Annotation",
+    "body": [
+      {
+        "type": "TextualBody",
+        "value": "hello",
+        "purpose": "commenting"
+      }
+    ],
+    "target": {
+      "source": "compressed.tracemonkey-09.pdf",
+      "selector": {
+        "type": "FragmentSelector",
+        "conformsTo": "http://www.w3.org/TR/media-frags/",
+        "value": "xywh=pixel:744.5,714,200,98",
+        "page": 1
+      }
+    },
+    "id": "#6933fb0e-5d67-4f15-a352-dccde7c1ebc2"
   }
 ]
