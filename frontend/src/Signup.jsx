@@ -9,6 +9,9 @@ function Signup() {
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
   
+    const [err, setErr] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+
     const handleEmailChange = (event) => {
       setEmail(event.target.value);
     };
@@ -24,15 +27,26 @@ function Signup() {
     const handleSubmit = (event) => {
       event.preventDefault();
       if(username != '' && email != '' && password != ''){
-        console.log(username, email, password);
         authServices.register(username, email, password)
-        .then(res => console.log(res));
+        .then(res => {
+          return res;
+        })
+        .catch(res => {
+          setErr(true);
+          setErrorMessage(res.message);
+        })
       }
-      // Add login logic here
+      window.location.href = '/login';
     };
-  
+
+    const handleClose = () =>{
+      setErr(false);
+      setErrorMessage("");
+    }
+
     return (
       <div className="wrap">
+        {err && (<Alert severity="error" onClose={() => {handleClose()}}>{errorMessage}</Alert>)}
       <div className="box" style={{width:'410px',height: '480px'}} >
       <form onSubmit={handleSubmit}>
         <h2>Signup</h2>

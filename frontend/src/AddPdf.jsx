@@ -15,7 +15,6 @@ const AddPdf = () => {
         data.append('user_id', authServices.getCurrentUser().id);
         fileServices.addNewFile(data)
         .then(res=> {
-            console.log(res);
             window.location.href = '/listpdf';
         })
     }

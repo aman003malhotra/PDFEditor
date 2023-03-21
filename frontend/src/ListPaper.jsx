@@ -29,11 +29,10 @@ const ListPaper = () => {
         window.location.href = '/addPdf';
     }
 
-    const handleDelete = (id) => {
-        console.log("delete")
-        fileServices.deleteFile(id)
+    const handleDelete = (filename) => {
+        fileServices.deleteFile(filename)
         .then(res => {
-            console.log('deleted');
+            location.reload();
         })
     }
   return (
@@ -43,17 +42,17 @@ const ListPaper = () => {
     <p>{(data.length == 0) && 'There are not Pdfs uploaded'}</p>
         {pdfData &&
             pdfData.map(oneData => (
-                <>
-                <div className="boxes" key={oneData._id}>
+                <div key={oneData._id}>
+                <div className="boxes" >
                     <img src="./file-svg.png" alt="" />
                     <h5>{oneData.filename.replace(/^[^_]*_/, "")}</h5>
                     <div className="btn">
                     <button onClick={() => handleOpen(oneData.filename)}><GiExitDoor/><span className='svg-open'> Open</span></button>
-                    <button onClick={() => handleDelete(oneData._id)}><AiTwotoneDelete/><span className='svg-open'>Delete</span></button>
+                    <button onClick={() => handleDelete(oneData.filename)}><AiTwotoneDelete/><span className='svg-open'>Delete</span></button>
                     </div>
                 </div>
                 {/* <li key={oneData._id}>{oneData.filename.replace(/^[^_]*_/, "")}</li> */}
-                </>
+                </div>
             ))
         }
       </div>

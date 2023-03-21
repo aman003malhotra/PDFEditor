@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import './Login.css';
 import authServices from './services/auth-services';
-import { Navigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+import Alert from '@mui/material/Alert';
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-  
+    const [err, setErr] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
     const handleEmailChange = (event) => {
       setEmail(event.target.value);
     };
@@ -23,15 +25,26 @@ function Login() {
         authServices.login(email, password)
         .then((res) => 
         {
-          console.log(res);
           window.location.href = '/';
-        });
+        })
+        .catch((err) => {
+          setErrorMessage(err.response.data);
+          setErr(true);
+        })
+      }else{
+        setErrorMessage("Please fill all the values");
+        setError(true);
       }
     };
-  
+    const handleClose = () =>{
+      setErr(false);
+      setErrorMessage("");
+    }
     return (
       <div className="wrap">
+        {err && (<Alert severity="error" onClose={() => {handleClose()}}>{errorMessage}</Alert>)}
       <div className="box">
+      
       <form onSubmit={handleSubmit}>
         <h2>Log In</h2>
         <div className="inputBox">
