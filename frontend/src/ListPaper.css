@@ -9,7 +9,7 @@
 }
 .boxes{
     width: 300px;
-    background-color:#FFD529;
+    background-color:#C4E6E6;
     margin: 10px 5px;
     border-radius: 20px;
     padding: 20px;
@@ -43,5 +43,5 @@
 }
 .svg-open{
     position: relative;
-    top: -8px;
+    top: -25px;
 }

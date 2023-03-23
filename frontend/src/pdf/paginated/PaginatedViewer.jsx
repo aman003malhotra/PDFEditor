@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { CgDebug, CgChevronLeft, CgChevronRight, CgArrowsExpandDownRight } from 'react-icons/cg';
 import { RiImageEditFill } from 'react-icons/ri';
-
 import AnnotatablePage from './AnnotatablePage';
 import { extendTarget } from '../PDFAnnotation';
+import {useDispatch, useSelector} from 'react-redux';
 
 const PaginatedViewer = props => {
+
+  const p = useSelector(state=> state.current_page);
+  const total_p = useSelector(state=> state.total_pages);
 
   const [ page, setPage ] = useState();
 
@@ -13,16 +16,24 @@ const PaginatedViewer = props => {
 
   const [ annotationMode, setAnnotationMode ] = useState('ANNOTATION');
 
+  const dispatch = useDispatch();
+
   // Render first page on mount
   useEffect(() => {
-    props.pdf.getPage(1).then(setPage);
-  }, []);
+    props.pdf.getPage(p).then(setPage);
+
+    dispatch({type:"SET_TOTAL_PAGES", payload:props.pdf.numPages});
+    
+  }, [p]);
 
   const onPreviousPage = () => {
     const { pageNumber } = page;
     const prevNum = Math.max(0, pageNumber - 1);
     if (prevNum !== pageNumber)
-      props.pdf.getPage(prevNum).then(page => setPage(page));
+      props.pdf.getPage(prevNum).then(page => {
+        setPage(page)
+        dispatch({type:"CHANGE_PAGE_NUM", payload:page})
+      });
   }
 
   const onNextPage = () => {
@@ -30,7 +41,10 @@ const PaginatedViewer = props => {
     const { pageNumber } = page;
     const nextNum = Math.min(pageNumber + 1, numPages);
     if (nextNum !== pageNumber)
-      props.pdf.getPage(nextNum).then(page => setPage(page));
+      props.pdf.getPage(nextNum).then(page => {
+        setPage(page)
+        dispatch({type:"CHANGE_PAGE_NUM", payload:page})
+      });
   }
 
   const onToggleRelationsMode = () => {
@@ -78,7 +92,7 @@ const PaginatedViewer = props => {
           </span>
         </button>
 
-        <label>{page?.pageNumber} / {props.pdf.numPages}</label>
+        <label>{page?.pageNumber} / {total_p}</label>
         
         <button onClick={onNextPage}>
           <span className="inner">

@@ -27,14 +27,13 @@ const ListPaper = () => {
     const handleOpen = (filename) => {
         localStorage.setItem('selected_pdf', filename);
         window.location.href = '/addPdf';
-        return false;
     }
 
     const handleDelete = (filename) => {
         fileServices.deleteFile(filename)
         .then(res => {
-            window.location.reload();
-            return false;
+            localStorage.removeItem('selected_pdf')
+            location.reload();
         })
     }
   return (

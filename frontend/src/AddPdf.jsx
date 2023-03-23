@@ -16,7 +16,6 @@ const AddPdf = () => {
         fileServices.addNewFile(data)
         .then(res=> {
             window.location.href = '/listpdf';
-            return false;
         })
     }
 

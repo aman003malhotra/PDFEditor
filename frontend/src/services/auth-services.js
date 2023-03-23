@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://pdf-editor-b9xt.onrender.com/";
+const API_URL = "http://localhost:5000/";
 
 class AuthService {
   login(email, password) {
@@ -20,7 +20,6 @@ class AuthService {
 
   logout() {
     localStorage.removeItem("user");
-    localStorage.removeItem("selected_pdf");
   }
 
   register(username, email, password) {

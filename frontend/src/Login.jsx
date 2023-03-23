@@ -26,15 +26,15 @@ function Login() {
         .then((res) => 
         {
           window.location.href = '/';
-          return false;
         })
         .catch((err) => {
+          console.log(err)
           setErrorMessage(err.response.data);
           setErr(true);
         })
       }else{
         setErrorMessage("Please fill all the values");
-        setErr(true);
+        setError(true);
       }
     };
     const handleClose = () =>{
