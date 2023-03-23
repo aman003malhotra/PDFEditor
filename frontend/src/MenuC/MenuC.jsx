@@ -46,16 +46,14 @@ const MenuC = () => {
       const handleLogout = () => {
         authServices.logout();
         window.location.href = '/login';
+        return false;
       }
-      // setUsername(authServices.getCurrentUser().username);
       return (
         <>
           <div id="header">
-              {/* collapsed props to change menu size using menucollapse state */}
             <ProSidebar >
               <SidebarHeader>
               <div className="logotext">
-                  {/* small and big change using menucollapse state */}
                   <p>PDF Editor Pro</p>
                 </div>
               </SidebarHeader>

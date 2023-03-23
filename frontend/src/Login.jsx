@@ -34,7 +34,7 @@ function Login() {
         })
       }else{
         setErrorMessage("Please fill all the values");
-        setError(true);
+        setErr(true);
       }
     };
     const handleClose = () =>{
