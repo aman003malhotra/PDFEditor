@@ -28,12 +28,13 @@ function Login() {
           window.location.href = '/';
         })
         .catch((err) => {
+          console.log(err)
           setErrorMessage(err.response.data);
           setErr(true);
         })
       }else{
         setErrorMessage("Please fill all the values");
-        setError(true);
+        setErr(true);
       }
     };
     const handleClose = () =>{

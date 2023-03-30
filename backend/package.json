@@ -13,7 +13,10 @@
     "nodemon": "^2.0.21",
     "uuid": "^9.0.0"
   },
-  "scripts":{
-    "start":"node index.js"
- }
+  "scripts": {
+    "start": "node index.js"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^11.0.0"
+  }
 }

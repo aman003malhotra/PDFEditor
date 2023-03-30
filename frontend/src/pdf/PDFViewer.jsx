@@ -3,11 +3,12 @@ import * as PDFJS from 'pdfjs-dist/legacy/build/pdf';
 import Connections from '@recogito/recogito-connections';
 import PaginatedViewer from './paginated/PaginatedViewer';
 import Store from './AnnotationStore';
-
+import Slider from './Slider'
 import 'pdfjs-dist/web/pdf_viewer.css';
 import '@recogito/recogito-js/dist/recogito.min.css';
 import '@recogito/annotorious/dist/annotorious.min.css';
 import './PDFViewer.css';
+import { useDispatch } from 'react-redux';
 
 const store = new Store();
 
@@ -17,6 +18,7 @@ const PDFViewer = props => {
 
   const [ connections, setConnections ] = useState();
 
+  const dispatch = useDispatch();
   // Load PDF on mount
   useEffect(() => {
     // Init after DOM load
@@ -61,6 +63,7 @@ const PDFViewer = props => {
   }
 
   return pdf ?
+  <>
       <PaginatedViewer 
         {...props}
         pdf={pdf}
@@ -70,7 +73,8 @@ const PDFViewer = props => {
         onUpdateAnnotation={onUpdateAnnotation}
         onDeleteAnnotation={onDeleteAnnotation} 
         onCancelSelected={onCancelSelected} />
-    
+        <Slider></Slider>
+        </>
     : <div className="nopdf"><div>Please Add a new PDF or select a PDF from My Papers or the selected PDF has a password.Please remove the password before uploading.</div></div>;
 
 }

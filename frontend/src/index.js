@@ -4,15 +4,21 @@ import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 pdfjs.GlobalWorkerOptions.workerSrc = 'pdf.worker.js';
 import RouterC from './RouterC';
+import './index.css';
+import {createStore} from 'redux';
+import { Provider } from 'react-redux';
+import reducer from './redux/reducer';
 
-// export { 
-//   pdfjs, PDFViewer
-// }
+const store = createStore(reducer);
 
 window.onload = function() {
 
   ReactDOM.render(
-    <RouterC />,
+
+    <Provider store={store} >
+      <RouterC />
+    </Provider>
+    ,
     document.getElementById('app')
   );
 }
