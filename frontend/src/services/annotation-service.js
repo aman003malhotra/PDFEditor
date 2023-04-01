@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const API_URL = "https://pdf-editor-b3zz.onrender.com/";
+export const API_URL = "http://localhost:5000/";
 
 class AnnotService {
   add(annotation, id, filename) {

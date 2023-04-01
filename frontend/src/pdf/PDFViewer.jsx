@@ -8,12 +8,14 @@ import 'pdfjs-dist/web/pdf_viewer.css';
 import '@recogito/recogito-js/dist/recogito.min.css';
 import '@recogito/annotorious/dist/annotorious.min.css';
 import './PDFViewer.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import PenFunction from './PenFunction';
 
 const store = new Store();
 
 const PDFViewer = props => {
-
+  
+  const paintMode = useSelector(state => state.paintMode)
   const [ pdf, setPdf ] = useState();
 
   const [ connections, setConnections ] = useState();
@@ -73,7 +75,7 @@ const PDFViewer = props => {
         onUpdateAnnotation={onUpdateAnnotation}
         onDeleteAnnotation={onDeleteAnnotation} 
         onCancelSelected={onCancelSelected} />
-        <Slider></Slider>
+        {paintMode ? <PenFunction/> : <Slider />}
         </>
     : <div className="nopdf"><div>Please Add a new PDF or select a PDF from My Papers or the selected PDF has a password.Please remove the password before uploading.</div></div>;
 

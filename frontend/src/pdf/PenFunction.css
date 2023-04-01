@@ -1,0 +1,17 @@
+.range-slider {
+    width: 30%;
+    height: 20px;
+    -webkit-appearance: none;
+    background-color: #ddd;
+    border-radius: 10px;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  
+  
+  

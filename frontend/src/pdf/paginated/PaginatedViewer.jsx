@@ -50,6 +50,7 @@ const PaginatedViewer = props => {
   }
 
   const onToggleRelationsMode = () => {
+    dispatch({type:"PAINT_MODE"});
     if (annotationMode === 'RELATIONS')
       setAnnotationMode('ANNOTATION');
     else
@@ -61,6 +62,7 @@ const PaginatedViewer = props => {
   }
 
   const onToggleImageMode = () => {
+    dispatch({type:"PAINT_MODE"});
     if (annotationMode === 'IMAGE')
       setAnnotationMode('ANNOTATION');
     else

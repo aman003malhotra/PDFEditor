@@ -3,7 +3,9 @@ let initialState = {
     current_page:1,
     total_pages:0,
     annotations:[],
-    paintMode:false
+    paintMode:false,
+    paintColor:"",
+    lineWidth:5
 }
 
 export default function reducer(currentState= initialState, action){
@@ -23,6 +25,16 @@ export default function reducer(currentState= initialState, action){
             return{
                 ...currentState,
                 paintMode:!currentState.paintMode,
+            }
+        case "CHANGE_LINE_WIDTH":
+            return{
+                ...currentState,
+                lineWidth:action.payload
+            }
+        case "CHANGE_COLOR":
+            return{
+                ...currentState,
+                paintColor:action.payload,
             }
         default:
             return currentState

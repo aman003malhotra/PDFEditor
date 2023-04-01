@@ -12,16 +12,15 @@ const AnnotatablePage = props => {
   const [ anno, setAnno ] = useState();
 
   const [ recogito, setRecogito ] = useState();
-  const [lineWidth, setLineWidth] = useState(5);
   const [isPainting, setIsPainting] = useState(false);
 
   const[startPainting, setStartPainting] = useState(false);
   const [startX, setStartX] = useState();
   const [startY, setStartY] = useState();
   const paintMode = useSelector(state=> state.paintMode);
-  // const canvas = document.createElement('canvas');
-  // const ctx = canvas.getContext('2d');
-  // ctx.strokeStyle = "black";
+  const paintColor = useSelector(state => state.paintColor);
+  const line_width = useSelector(state => state.lineWidth);
+    console.log(paintColor);
   // Cleanup previous Recogito instance, canvas + text layer
   const destroyPreviousPage = () => {
     // Clean up previous Recogito + Annotorious instance, if any
@@ -40,20 +39,19 @@ const AnnotatablePage = props => {
   }
 
   const handleMouseDown = (e) =>{
-    console.log("mouse down");
     setIsPainting(true);
     setStartX(e.clientX);
     setStartY(e.clientY);
   }
 
   const handleMouseUp = (e) => {
-    console.log("mouse up")
     setIsPainting(false);
     let canvas  = containerEl.current.querySelector('canvas');
     canvas.getContext('2d').stroke();
     canvas.getContext('2d').beginPath();
       let imageData = canvas.toDataURL('image/png', 1.0);
-      console.log(imageData);
+      console.log(props.page);
+      
       localStorage.setItem(props.page, imageData);
   }
 
@@ -63,10 +61,9 @@ const AnnotatablePage = props => {
         return;
       }
       console.log(e.clientX);
-      console.log("drawing");
       let canvas  = containerEl.current.querySelector('canvas');
   
-      canvas.getContext('2d').lineWidth = 5;
+      canvas.getContext('2d').lineWidth = line_width;
       canvas.getContext('2d').lineCap = 'round';
   
       canvas.getContext('2d').lineTo(e.clientX -  canvas.getBoundingClientRect().left , e.clientY - canvas.getBoundingClientRect().top);
@@ -86,8 +83,8 @@ const AnnotatablePage = props => {
       // const ctx = canvas.getContext('2d');
       canvas.height = viewport.height;
       canvas.width = viewport.width;
-      canvas.getContext('2d').strokeStyle = "blue";
-      canvas.getContext('2d').strokeRect(10, 10, 100, 100);
+      canvas.getContext('2d').strokeStyle = paintColor;
+      // canvas.getContext('2d').strokeRect(10, 10, 100, 100);
       containerEl.current.appendChild(canvas);
       
       canvas.addEventListener('mousedown', handleMouseDown);
@@ -142,7 +139,17 @@ const AnnotatablePage = props => {
         anno.on('selectAnnotation', () => r.selectAnnotation());
       }));
     }
-  }, [props.page ]);
+  }, [props.page]);
+
+  
+
+  useEffect(() => {
+    let canvas  = containerEl.current.querySelector('canvas');
+    if(canvas){
+      canvas.getContext('2d').strokeStyle = paintColor;
+    }
+  }, [paintColor]);
+
 
   useEffect(() => {
     // Hack
