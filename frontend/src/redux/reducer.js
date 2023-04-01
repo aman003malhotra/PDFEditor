@@ -5,7 +5,8 @@ let initialState = {
     annotations:[],
     paintMode:false,
     paintColor:"",
-    lineWidth:5
+    lineWidth:5,
+    eraseMode:false,
 }
 
 export default function reducer(currentState= initialState, action){
@@ -24,7 +25,7 @@ export default function reducer(currentState= initialState, action){
         case "PAINT_MODE":
             return{
                 ...currentState,
-                paintMode:!currentState.paintMode,
+                paintMode:action.payload,
             }
         case "CHANGE_LINE_WIDTH":
             return{
@@ -35,6 +36,11 @@ export default function reducer(currentState= initialState, action){
             return{
                 ...currentState,
                 paintColor:action.payload,
+            }
+        case "ERASE_MODE":
+            return{
+                ...currentState,
+                eraseMode:!currentState.eraseMode,    
             }
         default:
             return currentState

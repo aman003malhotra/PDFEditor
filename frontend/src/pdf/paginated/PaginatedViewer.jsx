@@ -11,7 +11,6 @@ const PaginatedViewer = props => {
   const p = useSelector(state=> state.current_page);
   const total_p = useSelector(state=> state.total_pages);
   const paintMode = useSelector(state=> state.paintMode);
-
   const [ page, setPage ] = useState();
 
   const [ debug, setDebug ] = useState(false);
@@ -50,7 +49,7 @@ const PaginatedViewer = props => {
   }
 
   const onToggleRelationsMode = () => {
-    dispatch({type:"PAINT_MODE"});
+    dispatch({type:"PAINT_MODE", payload:false});
     if (annotationMode === 'RELATIONS')
       setAnnotationMode('ANNOTATION');
     else
@@ -58,11 +57,12 @@ const PaginatedViewer = props => {
   }
 
   const onTogglePaintMode = () => {
-    dispatch({type:"PAINT_MODE"})
+    dispatch({type:"PAINT_MODE", payload:!paintMode});
+    setAnnotationMode('ANNOTATION');
   }
 
   const onToggleImageMode = () => {
-    dispatch({type:"PAINT_MODE"});
+    dispatch({type:"PAINT_MODE", payload:false});
     if (annotationMode === 'IMAGE')
       setAnnotationMode('ANNOTATION');
     else
