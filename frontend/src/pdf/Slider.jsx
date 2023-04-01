@@ -40,15 +40,6 @@ function Slider() {
               id='slider'
               className='w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide'
             >
-              {/* {data.map((item) => (
-                <div
-                  className='w-[140px] h-[140px] mx-4 inline-block p-2 cursor-pointer rounded-lg hover:scale-105 ease-in-out duration-300 bg-[#6260d1] opacity-[0.49]'
-                  onClick={(i)=>{handleClick(i)}}
-                >
-
-                </div>
-              ))} */}
-
               {
                 pageAr.map(item => (
                   item

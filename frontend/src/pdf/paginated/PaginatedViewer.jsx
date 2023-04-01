@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { CgDebug, CgChevronLeft, CgChevronRight, CgArrowsExpandDownRight } from 'react-icons/cg';
+import { BsFillPenFill } from 'react-icons/bs';
 import { RiImageEditFill } from 'react-icons/ri';
 import AnnotatablePage from './AnnotatablePage';
 import { extendTarget } from '../PDFAnnotation';
@@ -9,6 +10,7 @@ const PaginatedViewer = props => {
 
   const p = useSelector(state=> state.current_page);
   const total_p = useSelector(state=> state.total_pages);
+  const paintMode = useSelector(state=> state.paintMode);
 
   const [ page, setPage ] = useState();
 
@@ -52,6 +54,10 @@ const PaginatedViewer = props => {
       setAnnotationMode('ANNOTATION');
     else
       setAnnotationMode('RELATIONS'); 
+  }
+
+  const onTogglePaintMode = () => {
+    dispatch({type:"PAINT_MODE"})
   }
 
   const onToggleImageMode = () => {
@@ -115,6 +121,14 @@ const PaginatedViewer = props => {
             <RiImageEditFill />
           </span>
         </button>
+
+        <button
+          className={paintMode ? 'active' : null} 
+          onClick={onTogglePaintMode}>
+          <span className="inner">
+            <BsFillPenFill />
+          </span>
+        </button>
       </header>
 
       <main>
@@ -128,7 +142,8 @@ const PaginatedViewer = props => {
             onCreateAnnotation={onCreateAnnotation}
             onUpdateAnnotation={onUpdateAnnotation}
             onDeleteAnnotation={onDeleteAnnotation} 
-            onCancelSelected={props.onCancelSelected} />
+            onCancelSelected={props.onCancelSelected} 
+            />
         </div>
       </main>
     </div>

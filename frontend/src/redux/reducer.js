@@ -2,7 +2,8 @@ let initialState = {
     pdfName:"",
     current_page:1,
     total_pages:0,
-    annotations:[]
+    annotations:[],
+    paintMode:false
 }
 
 export default function reducer(currentState= initialState, action){
@@ -17,6 +18,11 @@ export default function reducer(currentState= initialState, action){
             return{
                 ...currentState,
                 total_pages:action.payload
+            }
+        case "PAINT_MODE":
+            return{
+                ...currentState,
+                paintMode:!currentState.paintMode,
             }
         default:
             return currentState

@@ -27,7 +27,6 @@ const ListPaper = () => {
     const handleOpen = (filename) => {
         localStorage.setItem('selected_pdf', filename);
         window.location.href = '/addPdf';
-        return false;
     }
 
     const handleDelete = (filename) => {
@@ -35,7 +34,6 @@ const ListPaper = () => {
         .then(res => {
             localStorage.removeItem('selected_pdf')
             window.location.reload();
-            return false;
         })
     }
   return (

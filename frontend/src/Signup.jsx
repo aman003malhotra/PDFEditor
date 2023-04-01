@@ -38,7 +38,6 @@ function Signup() {
         })
       }
       window.location.href = '/login';
-      return false;
     };
 
     const handleClose = () =>{
