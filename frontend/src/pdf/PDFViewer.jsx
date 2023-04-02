@@ -15,7 +15,7 @@ const store = new Store();
 
 const PDFViewer = props => {
   
-  const paintMode = useSelector(state => state.paintMode)
+  const paintToggle = useSelector(state => state.paintToggle)
   const [ pdf, setPdf ] = useState();
 
   const [ connections, setConnections ] = useState();
@@ -75,7 +75,7 @@ const PDFViewer = props => {
         onUpdateAnnotation={onUpdateAnnotation}
         onDeleteAnnotation={onDeleteAnnotation} 
         onCancelSelected={onCancelSelected} />
-        {paintMode ? <PenFunction/> : <Slider />}
+        {paintToggle ? <PenFunction/> : <Slider />}
         </>
     : <div className="nopdf"><div>Please Add a new PDF or select a PDF from My Papers or the selected PDF has a password.Please remove the password before uploading.</div></div>;
 

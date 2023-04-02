@@ -7,6 +7,7 @@ let initialState = {
     paintColor:"",
     lineWidth:5,
     eraseMode:false,
+    paintToggle:false,
 }
 
 export default function reducer(currentState= initialState, action){
@@ -40,7 +41,12 @@ export default function reducer(currentState= initialState, action){
         case "ERASE_MODE":
             return{
                 ...currentState,
-                eraseMode:!currentState.eraseMode,    
+                eraseMode:action.payload,    
+            }
+        case "PAINT_TOGGLE":
+            return{
+                ...currentState,
+                paintToggle:action.payload,
             }
         default:
             return currentState
