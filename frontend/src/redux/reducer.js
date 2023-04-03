@@ -8,6 +8,8 @@ let initialState = {
     lineWidth:5,
     eraseMode:false,
     paintToggle:false,
+    historyIndex:0,
+    history:[]
 }
 
 export default function reducer(currentState= initialState, action){
@@ -47,6 +49,21 @@ export default function reducer(currentState= initialState, action){
             return{
                 ...currentState,
                 paintToggle:action.payload,
+            }
+        case "HISTORY_INDEX_INCREMENT":
+            return{
+                ...currentState,
+                historyIndex:currentState.historyIndex + 1,
+            }
+        case "HISTORY_INDEX_DECREMENT":
+            return{
+                ...currentState,
+                historyIndex:currentState.historyIndex - 1,
+            }
+        case "ADD_TO_HISTORY":
+            return{
+                ...currentState,
+                history:[...currentState.history, action.payload]
             }
         default:
             return currentState
