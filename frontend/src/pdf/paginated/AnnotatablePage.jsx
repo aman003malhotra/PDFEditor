@@ -18,10 +18,13 @@ const AnnotatablePage = props => {
   const paintMode = useSelector(state=> state.paintMode);
   const paintColor = useSelector(state => state.paintColor);
   const line_width = useSelector(state => state.lineWidth);
+  const paintToggle = useSelector(state => state.paintToggle);
+  const [mouseTime, setMouseTime ] = useState();
   
   const dispatch = useDispatch();
   const history = useSelector(state => state.history);
   const historyIndex = useSelector(state => state.historyIndex);
+
   // Cleanup previous Recogito instance, canvas + text layer
   const destroyPreviousPage = () => {
     // Clean up previous Recogito + Annotorious instance, if any
@@ -51,14 +54,12 @@ const AnnotatablePage = props => {
     }
   }
 
-  var mouseDownTime;
-
   function handleMouseDown(e){
     console.log("mouse clicked")
-    mouseDownTime = e.timeStamp;
-    console.log(mouseDownTime);
+    let mouseDownTime = new Date().getTime();
+    setMouseTime(mouseDownTime);
     setIsPainting(true);
-    if(paintMode && history.length == 0){
+    if(paintToggle && paintMode && history.length == 0){
       let canvas  = containerEl.current.querySelector('canvas');
       let imageData = canvas.toDataURL('image/png', 1.0);
       console.log(imageData);
@@ -72,30 +73,32 @@ const AnnotatablePage = props => {
   function handleMouseUp(e){
     setIsPainting(false);
     console.log("mouse release")
-    let mouseUpTime = e.timeStamp;
-    console.log(mouseDownTime);
+    let mouseUpTime =  new Date().getTime();
+    console.log(mouseTime);
     console.log(mouseUpTime);
-    if (mouseUpTime && mouseDownTime) {
-      const timeElapsed = mouseUpTime - mouseDownTime;
+    let timeElapsed
+    if (mouseUpTime && mouseTime) {
+      timeElapsed = mouseUpTime - mouseTime;
       console.log(`Time elapsed between mouse up and mouse down: ${timeElapsed} milliseconds`);
     }
-    mouseDownTime = null;
-    console.log(mouseDownTime);
-    if(paintMode){
+    setMouseTime(null);
+    if(paintMode && paintToggle){
       let canvas  = containerEl.current.querySelector('canvas');
       canvas.getContext('2d').stroke();
       canvas.getContext('2d').beginPath();
-      let imageData = canvas.toDataURL('image/png', 1.0);
-      console.log(imageData);
-      dispatch({type:"ADD_TO_HISTORY", payload:imageData});
-      dispatch({type:"HISTORY_INDEX_INCREMENT"});
-      console.log(props.page);
-      localStorage.setItem(props.page.pageIndex, imageData);
+      if(timeElapsed > 300){
+        let imageData = canvas.toDataURL('image/png', 1.0);
+        console.log(imageData);
+        dispatch({type:"ADD_TO_HISTORY", payload:imageData});
+        dispatch({type:"SET_HISTORY_INDEX"});
+      }
+      // console.log(props.page);
+      // localStorage.setItem(props.page.pageIndex, imageData);
     }
   }
 
   const handleMouseMove = (e) => {
-    if(paintMode){
+    if(paintMode && paintToggle){
       if(!isPainting) {
         return;
       }
@@ -207,15 +210,19 @@ const AnnotatablePage = props => {
   }, [ props.annotations ]);
 
   useEffect(() => {
+    console.log(props.annotationMode);
     if (containerEl.current) {
       const imageLayer = containerEl.current.querySelector('svg.a9s-annotationlayer');
       
       if (imageLayer) {
         if (props.annotationMode === 'IMAGE') {
           imageLayer.style.pointerEvents = 'auto';
-        } else {
+        } else if(props.annotationMode === 'ANNOTATION') {
           imageLayer.style.pointerEvents = null;
+          containerEl.current.querySelector('.textLayer').style.pointerEvents = 'auto';
           recogito.setMode(props.annotationMode);
+        }else{
+          containerEl.current.querySelector('.textLayer').style.pointerEvents = null;
         }
       }
     }

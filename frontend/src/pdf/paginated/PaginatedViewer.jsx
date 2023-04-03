@@ -59,7 +59,12 @@ const PaginatedViewer = props => {
 
   const onTogglePaintMode = () => {
     dispatch({type:"PAINT_TOGGLE", payload:!paintToggle});
-    setAnnotationMode('ANNOTATION');
+    
+    if(annotationMode === 'PEN'){
+      setAnnotationMode('IMAGE');
+    }else{
+      setAnnotationMode('PEN');
+    }
   }
 
   const onToggleImageMode = () => {

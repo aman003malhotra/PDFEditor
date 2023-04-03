@@ -65,6 +65,11 @@ export default function reducer(currentState= initialState, action){
                 ...currentState,
                 history:[...currentState.history, action.payload]
             }
+        case "SET_HISTORY_INDEX":
+            return{
+                ...currentState,
+                historyIndex:currentState.history.length-1,
+            }
         default:
             return currentState
     }

@@ -24,16 +24,9 @@ const PenFunction = () => {
         dispatch({type:"CHANGE_LINE_WIDTH", payload:e.target.value})
     }
 
-    const toggleEraseMode = () => {
-        console.log("erase mode changed");
-        dispatch({type:"ERASE_MODE", payload:true});
-        dispatch({type:"PAINT_MODE", payload:false});
-    }
-
     const togglePaintMode = () => {
         console.log("paint mode changed");
-        dispatch({type:"PAINT_MODE", payload:true});
-        dispatch({type:"ERASE_MODE", payload:false});
+        dispatch({type:"PAINT_MODE", payload:!paintMode});
     }
 
 
@@ -52,6 +45,9 @@ const PenFunction = () => {
   return (
     <div className='fixed flex flex-row items-center right-0 bottom-0 left-[220px] bg-white z-10 justify-evenly'>
     <CirclePicker onChangeComplete = {changeColor} />
+    <button className="cancel" onClick={undoButton}>
+        UNDO
+    </button>
     <div 
     className="edit" 
     onClick={togglePaintMode}
@@ -70,19 +66,16 @@ const PenFunction = () => {
         strokeLinejoin="round"/>
         </svg>
     </div>
+    <button className="cancel" onClick={redoButton}>
+        REDO
+    </button>
     <input type="range" min="0" max="20" step="0.1" value={lineWidth}  className="slider" id="myRange" onChange={changeLineWidth}/>
     <button className="save">
         Save    
     </button>
-    <button className="cancel">
+    <button className="cancel" onClick={() => (dispatch({type:"PAINT_TOGGLE", payload:false}))}>
         Cancel
-    </button>
-    <button onClick={undoButton}>
-        UNDO
-    </button>
-    <button onClick={redoButton}>
-        REDO
-    </button>
+    </button>    
 </div>
   )
 };
