@@ -8,6 +8,7 @@ import PDFComponent from './PDFComponent';
 import AddPdf from './AddPdf';
 import ListPaper from './ListPaper';
 import authServices from './services/auth-services';
+import Main from './Main';
 
 function RouterC() {
     return (
@@ -16,9 +17,10 @@ function RouterC() {
           <Route index path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route exact path="/" element={authServices.getCurrentUser() ?  <App />:<Navigate to="/login" replace={true} />} >
-            <Route path="/" element={<AddPdf/>}/>
+            <Route path="/" element={<Main/>}/>
             <Route path='addPdf' element={<PDFComponent/>}/>
             <Route path='listpdf' element={<ListPaper/>}/>
+            <Route path='addnewpdf' element={<AddPdf/>}/>
           </Route>
           
         </Routes>

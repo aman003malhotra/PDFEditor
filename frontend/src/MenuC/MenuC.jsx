@@ -53,7 +53,7 @@ const MenuC = () => {
             <ProSidebar >
               <SidebarHeader>
               <div className="logotext">
-                  <p>PDF Editor Pro</p>
+                  <p>AI Koach</p>
                 </div>
               </SidebarHeader>
               <SidebarContent>
@@ -62,7 +62,7 @@ const MenuC = () => {
                    <MenuItem className={activeLink === '/listpdf' ? 'active' : ''}  icon={<GiPapers />}><Link to="listpdf">My Papers </Link></MenuItem>
                   <MenuItem className={activeLink === '/addPdf' ? 'active' : ''} icon={<IoIosPaper />}><Link to="addPdf"> Evaluation </Link></MenuItem>
                   <MenuItem icon={<IoNewspaperOutline />}>Re-Evaluation</MenuItem>
-                  <MenuItem icon={<HiOutlineDocumentReport />}>Reports</MenuItem>
+                  <MenuItem icon={<HiOutlineDocumentReport />}><Link to="addnewpdf">Add New PDF</Link></MenuItem>
                   <MenuItem icon={<FaHistory />}>History</MenuItem>
                 </Menu>
               </SidebarContent>

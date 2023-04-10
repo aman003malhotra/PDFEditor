@@ -57,6 +57,7 @@ const PaginatedViewer = props => {
       setAnnotationMode('RELATIONS'); 
   }
 
+  // TODO:NOT Working fine look into it.
   const onTogglePaintMode = () => {
     dispatch({type:"PAINT_TOGGLE", payload:!paintToggle});
     
@@ -94,11 +95,11 @@ const PaginatedViewer = props => {
   return (
     <div>
       <header>
-        <button onClick={() => setDebug(!debug)}>
+        {/* <button onClick={() => setDebug(!debug)}>
           <span className="inner">
             <CgDebug />
           </span>
-        </button>
+        </button> */}
 
         <button onClick={onPreviousPage}>
           <span className="inner">
@@ -114,13 +115,13 @@ const PaginatedViewer = props => {
           </span>
         </button>
 
-        <button 
+        {/* <button 
           className={annotationMode === 'RELATIONS' ? 'active' : null} 
           onClick={onToggleRelationsMode}>
           <span className="inner">
             <CgArrowsExpandDownRight />
           </span>
-        </button>
+        </button> */}
 
         <button
           className={annotationMode === 'IMAGE' ? 'active' : null} 
