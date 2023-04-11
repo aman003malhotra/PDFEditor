@@ -3,6 +3,8 @@ import * as pdfjs from 'pdfjs-dist/legacy/build/pdf';
 import PDFViewer from './pdf/PDFViewer';
 import annotationService from './services/annotation-service';
 import { API_URL } from './services/annotation-service';
+import Question from './Questions/Question';
+
 const PDFComponent = () => {
 
     const [ annotations, setAnnotations ] = useState();
@@ -33,12 +35,8 @@ const PDFComponent = () => {
         onCreateAnnotation={a => console.log(JSON.stringify(a))} 
         onUpdateAnnotation={(a, b) => console.log(JSON.stringify(a, b))} 
         onDeleteAnnotation={a => console.log(JSON.stringify(a))} />
-        <div className='w-[200px]'>
-           QUESTION TAB
-           <div>Question 1</div>
-           <div>Question 2</div>
-           <div>Question 3</div>
-           <div>Question 4</div>
+        <div>
+          <Question />
         </div>
       </div>
       

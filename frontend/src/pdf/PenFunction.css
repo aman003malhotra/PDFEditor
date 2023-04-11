@@ -13,7 +13,7 @@
   }
   .slider {
     -webkit-appearance: none;
-    width: 500px;
+    width: 30%;
     height: 10px;
     /* clip-path: polygon(0% 50%,100% 0% , 108% 100%,0% 56%); */
     /* background-color: #87898B; */
@@ -46,8 +46,8 @@
   .slider::after{
     display: inline-block;
     content: '';
-    background: #87898B;
-    width: 500px;
+    background: #ADA7FF;
+    width: 30%;
     position: absolute;
     top: 45px;
     height: 26px;
@@ -57,26 +57,18 @@
   }
 
 
-  .edit{
-    background-color: #87898B;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.edit{
+  background-color: #ADA7FF;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.erase{
-    background-color: #ffffff;
-    width: 40px;
-    height: 40px;
-    display: flex;
-  
-    justify-content: center;
-    align-items: center;
-}
+
 .save{
     padding: 7px 40px;
-    background-color: #87898B;
+    background-color: #ADA7FF;
     border: none;
     border-radius: 5px;
     color: white;
@@ -84,10 +76,14 @@
 .cancel{
     padding: 7px 40px;
     background-color: white;
-    border: 2px solid #87898B;
+    border: 2px solid #ADA7FF;
     border-radius: 5px;
-    color: #87898B;
+    color: #ADA7FF;
 }
   
-  
-  
+.rubutton{
+  padding: 10px;
+  border-radius: 25px;
+  border: 2px solid #ADA7FF;
+  color: #ADA7FF;
+}

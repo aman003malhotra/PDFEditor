@@ -5,6 +5,8 @@ import { RiImageEditFill } from 'react-icons/ri';
 import AnnotatablePage from './AnnotatablePage';
 import { extendTarget } from '../PDFAnnotation';
 import {useDispatch, useSelector} from 'react-redux';
+import Slider from '../Slider'
+import PenFunction from '../PenFunction';
 
 const PaginatedViewer = props => {
 
@@ -93,8 +95,8 @@ const PaginatedViewer = props => {
   }
   
   return (
-    <div>
-      <header>
+    <div style={{position:"relative"}}>
+      <header style={{position:"absolute"}}>
         {/* TODO:DELETE THEM AT THE END */}
         {/* <button onClick={() => setDebug(!debug)}>
           <span className="inner">
@@ -156,6 +158,7 @@ const PaginatedViewer = props => {
             />
         </div>
       </main>
+      {paintToggle ? <PenFunction/> : <Slider />}
     </div>
   )
 

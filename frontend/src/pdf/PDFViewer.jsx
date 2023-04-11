@@ -75,7 +75,6 @@ const PDFViewer = props => {
         onUpdateAnnotation={onUpdateAnnotation}
         onDeleteAnnotation={onDeleteAnnotation} 
         onCancelSelected={onCancelSelected} />
-        {paintToggle ? <PenFunction/> : <Slider />}
         </>
     : <div className="nopdf"><div>Please Add a new PDF or select a PDF from My Papers or the selected PDF has a password.Please remove the password before uploading.</div></div>;
 

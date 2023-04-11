@@ -1,0 +1,59 @@
+.main__Question{
+    position: relative;
+}
+
+.header__Question{
+  position:absolute;
+  width:100%;
+  padding:20px;
+  background-color:#EAE2FF;
+  z-index:3;
+}
+
+
+/* .accordion__Question{
+
+} */
+
+.accordion {
+  max-width: 600px;
+  margin: 2rem auto;
+}
+
+.accordion-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  cursor: pointer;
+  background-color: #6D6AFF;
+  opacity: 0.49;
+  font-weight: 700;
+  font-size: 16px;
+  color:#FFFFFF;
+}
+
+.accordion-title:hover {
+  background-color: #615EEA;
+}
+
+.accordion-title,
+.accordion-content {
+  padding: 1rem;
+
+}
+
+.accordion-content {
+  background-color: #EAE2FF;
+  color:#464E5F;
+}
+
+@media screen and (max-width: 700px) {
+  body {
+    font-size: 18px;
+  }
+
+  .accordion {
+    width: 90%;
+  }
+}
+

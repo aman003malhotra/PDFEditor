@@ -34,7 +34,7 @@ function Slider() {
       return (
         <>
         
-          <div className='fixed flex items-center right-0 bottom-0 left-[220px] bg-white z-10'>
+          <div className='absolute flex items-center right-0 left-0 bottom-0 bg-white z-10'>
             <MdChevronLeft className='opacity-50 cursor-pointer hover:opacity-100' onClick={slideLeft} size={40} />
             <div
               id='slider'
