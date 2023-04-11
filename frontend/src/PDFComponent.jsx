@@ -21,7 +21,8 @@ const PDFComponent = () => {
     }, []);
   
     return (
-      <PDFViewer 
+      <div className='flex flex-row'>
+        <PDFViewer 
         style={{width:"60%"}}
         mode="scrolling"
         config={{
@@ -32,6 +33,15 @@ const PDFComponent = () => {
         onCreateAnnotation={a => console.log(JSON.stringify(a))} 
         onUpdateAnnotation={(a, b) => console.log(JSON.stringify(a, b))} 
         onDeleteAnnotation={a => console.log(JSON.stringify(a))} />
+        <div className='w-[200px]'>
+           QUESTION TAB
+           <div>Question 1</div>
+           <div>Question 2</div>
+           <div>Question 3</div>
+           <div>Question 4</div>
+        </div>
+      </div>
+      
     )
   
   }

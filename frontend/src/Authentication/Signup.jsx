@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import './Login.css';
-import authServices from './services/auth-services';
+import authServices from '../services/auth-services';
 import {Link} from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 

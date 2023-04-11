@@ -95,6 +95,7 @@ const PaginatedViewer = props => {
   return (
     <div>
       <header>
+        {/* TODO:DELETE THEM AT THE END */}
         {/* <button onClick={() => setDebug(!debug)}>
           <span className="inner">
             <CgDebug />

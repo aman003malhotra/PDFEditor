@@ -1,14 +1,14 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import App from './App';
-import Login from './Login';
+import Login from './Authentication/Login';
 import MenuC from './MenuC/MenuC';
-import Signup from './Signup';
+import Signup from './Authentication/Signup';
 import PDFComponent from './PDFComponent';
-import AddPdf from './AddPdf';
+import AddPdf from './AddNewPdf/AddPdf';
 import ListPaper from './ListPaper';
 import authServices from './services/auth-services';
-import Main from './Main';
+import Main from './Evaluation/Main';
 
 function RouterC() {
     return (

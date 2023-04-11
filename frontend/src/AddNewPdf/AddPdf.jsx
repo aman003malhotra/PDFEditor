@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import axios from "axios";
-import authServices from './services/auth-services';
-import fileServices from './services/file-services';
+import authServices from '../services/auth-services';
+import fileServices from '../services/file-services';
 import './AddPdf.css'
 const AddPdf = () => {
 

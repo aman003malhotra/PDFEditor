@@ -2,6 +2,7 @@ import { useState } from 'react';
 import{ CirclePicker } from 'react-color';
 import './PenFunction.css';
 import { useDispatch, useSelector } from 'react-redux';
+import { FaUndo, FaRedo } from 'react-icons/fa'
 
 const PenFunction = () => {
 
@@ -46,7 +47,7 @@ const PenFunction = () => {
     <div className='fixed flex flex-row items-center right-0 bottom-0 left-[220px] bg-white z-10 justify-evenly'>
     <CirclePicker onChangeComplete = {changeColor} />
     <button className="cancel" onClick={undoButton}>
-        UNDO
+        <FaUndo />
     </button>
     <div 
     className="edit" 
@@ -67,7 +68,7 @@ const PenFunction = () => {
         </svg>
     </div>
     <button className="cancel" onClick={redoButton}>
-        REDO
+        <FaRedo />
     </button>
     <input type="range" min="0" max="20" step="0.1" value={lineWidth}  className="slider" id="myRange" onChange={changeLineWidth}/>
     <button className="save">
