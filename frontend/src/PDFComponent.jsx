@@ -35,7 +35,7 @@ const PDFComponent = () => {
         onCreateAnnotation={a => console.log(JSON.stringify(a))} 
         onUpdateAnnotation={(a, b) => console.log(JSON.stringify(a, b))} 
         onDeleteAnnotation={a => console.log(JSON.stringify(a))} />
-        <div>
+        <div style={{flexGrow:1}}>
           <Question />
         </div>
       </div>

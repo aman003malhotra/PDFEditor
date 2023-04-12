@@ -31,9 +31,8 @@ const Question = () => {
 
     <div className='main__Question'>
         <div className="header__Question bg-white">
-          <button className='bg-[#C9F7F5] text-base rounded-md text-[#1BC5BD] py-2 px-5'>Evaluated</button>
+          <button className='sticky bg-[#C9F7F5] text-base rounded-md text-[#1BC5BD] py-2 px-5'>Evaluated</button>
         </div>
-        <h1>React Accordion Demo</h1>
         <div className="accordion">
             {accordionData.map(({ title, content }) => (
             <Accordion title={title} content={content} />

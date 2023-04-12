@@ -3,3 +3,7 @@
     left:220px;
     position: relative;
 } */
+
+.app{
+    flex-grow: 1;
+}

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import './Login.css';
 import authServices from '../services/auth-services';
 import { Link } from "react-router-dom";
 import Alert from '@mui/material/Alert';
@@ -43,31 +42,8 @@ function Login() {
       setErrorMessage("");
     }
     return (
-    //   <div className="wrap">
-    //     {err && (<Alert severity="error" onClose={() => {handleClose()}}>{errorMessage}</Alert>)}
-    //     <div className="box">
-        
-    //     <form onSubmit={handleSubmit}>
-    //       <h2>Log In</h2>
-    //       <div className="inputBox">
-    //         <input type="email" id='email' required="required" value={email} onChange={handleEmailChange}/>
-    //         <span>Email Address</span>
-    //         <i></i>
-    //       </div>
-    //       <div className="inputBox">
-    //         <input type="password" required="required" id='password' value={password} onChange={handlePasswordChange}/>
-    //         <span>Password</span>
-    //         <i></i>
-    //       </div>
-    //       <div className="links">
-    //         <Link to="/signup">Does not have an account Signup</Link>
-    //       </div>
-    //       <input type="submit" value="Login"/>
-    //     </form>
-    //   </div>
-    // </div>
-    <div>
-      <div className="flex flex-row justify-around items-center h-[100vh]">
+    <div className="grow">
+      <div className="flex flex-col justify-around items-center h-[100vh] xl:flex-row">
       {err && (<Alert severity="error" onClose={() => {handleClose()}}>{errorMessage}</Alert>)}
         <div className='flex flex-col'>
           <div className='text-4xl font-bold text-[#2F2F2F] text-opacity-60'>Welcome To<span className='text-[#6358DC]'> AI Koach</span></div>
@@ -86,7 +62,7 @@ function Login() {
                 </div>
                 <div className='flex flex-col'>
                   <lable className="text-xs font-normal text-[#464E5F] pl-14 py-4">Email</lable>
-                  <input type="text" className="bg-[#EAE2FF]  text-[#464E5F] font-bold text-base rounded-lg block w-full pl-14 pb-5 border-transparent focus:border-transparent focus:ring-0" placeholder="example@gmail.com" />
+                  <input type="email" className="bg-[#EAE2FF]  text-[#464E5F] font-bold text-base rounded-lg block w-full pl-14 pb-5 border-transparent focus:outline-none" placeholder="example@gmail.com"  id='email' required="required" value={email} onChange={handleEmailChange}/>
                 </div>
               </div>
 
@@ -99,8 +75,12 @@ function Login() {
                 </div>
                 <div className='flex flex-col'>
                   <lable className="text-xs font-normal text-[#464E5F] pl-14 py-4">Password</lable>
-                  <input type="password" className="bg-[#EAE2FF]  text-[#464E5F] font-bold text-base rounded-lg block w-full pl-14 pb-5 border-transparent focus:border-transparent focus:ring-0"/>
+                  <input className="bg-[#EAE2FF]  text-[#464E5F] font-bold text-base rounded-lg block w-full pl-14 pb-5 border-transparent focus:outline-none" type="password" required="required" id='password' value={password} onChange={handlePasswordChange}/>
                 </div>
+              </div>
+              <div className='flex flex-row justify-between'>
+                <div><input type="checkbox" />Remember me</div>
+                <div className='text-[#6358DC] text-base font-normal'>Forgot Password ?</div>
               </div>
               <button type="submit" value="Login" className='block w-full bg-[#615EEA] text-base text-white rounded-lg py-7 px-[310px]'>
                 Login  
