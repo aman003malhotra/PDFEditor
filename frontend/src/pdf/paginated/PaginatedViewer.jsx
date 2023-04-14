@@ -159,7 +159,7 @@ const PaginatedViewer = props => {
             />
         </div>
       </main>
-      {/* {paintToggle ? <PenFunction/> : <Slider />} */}
+      {paintToggle ? <PenFunction/> : <Slider />}
         <MarkSheet/>
     </div>
   )
