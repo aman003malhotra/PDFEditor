@@ -30,7 +30,9 @@ const PDFComponent = () => {
         config={{
           relationVocabulary: ['located_at', 'observed_at']
         }}
-        url= {API_URL+localStorage.getItem('selected_pdf')} 
+        // url= {API_URL+localStorage.getItem('selected_pdf')} 
+        // TODO:REDO THE CHANGES
+        url = "compressed.tracemonkey-pldi-09.pdf"
         annotations={annotations} 
         onCreateAnnotation={a => console.log(JSON.stringify(a))} 
         onUpdateAnnotation={(a, b) => console.log(JSON.stringify(a, b))} 

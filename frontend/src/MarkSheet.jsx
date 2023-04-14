@@ -9,10 +9,9 @@ const MarkSheet = () => {
 
    }
   return (
-    <div className='absolute markbox' >
-        <button id="up" className='bg-[#6FCF97] text-sm px-4 py-1 font-bold z-50' onClick={handleChange}>MarkSheet</button>
-        <div className={up ? "backward absolute left-0 right-0 z-30": "forward absolute left-0 right-0 z-30"}>
-
+    <div className={up ? "bottom-0 absolute left-0 right-0 z-30": "bottom-[-352px] absolute left-0 right-0 z-30"}>
+      <button id="up" className='bg-[#6FCF97] text-sm px-4 py-1 font-bold z-50' onClick={handleChange}>MarkSheet</button>
+        <div className={"left-0 right-0 z-30"}>
             <div className="relative overflow-x-auto bg-[#EAE2FF]">
                 <table className="w-full text-sm text-left text-[#454B54]  mx-10 my-6">
                     <thead className="text-base text-[#8F97A3] uppercase bg-white border-t-s border-#EAE2FF">
