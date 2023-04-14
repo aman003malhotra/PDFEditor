@@ -7,6 +7,7 @@ import { extendTarget } from '../PDFAnnotation';
 import {useDispatch, useSelector} from 'react-redux';
 import Slider from '../Slider'
 import PenFunction from '../PenFunction';
+import MarkSheet from '../../MarkSheet';
 
 const PaginatedViewer = props => {
 
@@ -158,7 +159,8 @@ const PaginatedViewer = props => {
             />
         </div>
       </main>
-      {paintToggle ? <PenFunction/> : <Slider />}
+      {/* {paintToggle ? <PenFunction/> : <Slider />} */}
+        <MarkSheet/>
     </div>
   )
 

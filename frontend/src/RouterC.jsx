@@ -9,6 +9,7 @@ import AddPdf from './AddNewPdf/AddPdf';
 import ListPaper from './ListPaper';
 import authServices from './services/auth-services';
 import Main from './Evaluation/Main';
+import MarkSheet from './MarkSheet';
 
 function RouterC() {
     return (
@@ -21,6 +22,7 @@ function RouterC() {
             <Route path='addPdf' element={<PDFComponent/>}/>
             <Route path='listpdf' element={<ListPaper/>}/>
             <Route path='addnewpdf' element={<AddPdf/>}/>
+            <Route path='mark' element={<MarkSheet/>}/>
           </Route>
           
         </Routes>
