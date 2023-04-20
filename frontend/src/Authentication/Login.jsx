@@ -78,7 +78,7 @@ function Login() {
                   <input className="bg-[#EAE2FF]  text-[#464E5F] font-bold text-base rounded-lg block w-full pl-14 pb-5 border-transparent focus:outline-none" type="password" required="required" id='password' value={password} onChange={handlePasswordChange}/>
                 </div>
               </div>
-              <div className='flex flex-row justify-between'>
+              <div className='flex flex-row justify-between py-5'>
                 <div><input type="checkbox" />Remember me</div>
                 <div className='text-[#6358DC] text-base font-normal'>Forgot Password ?</div>
               </div>

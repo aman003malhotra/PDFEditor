@@ -1,8 +1,19 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import Accordion from './Accordian';
 import './Question.css';
-
+import ConfirmationModal from './ConfirmationModal';
 const Question = () => {
+
+    const [showModal, setShowModal] = useState(false);
+    const [questionData, setQuestionData] = useState([]);
+    const handleEvaluatedToggle = () =>{
+      setShowModal(!showModal);
+      console.log(showModal);
+    }
+    
+    useEffect(() => {
+
+    }, [])
     const accordionData = [
         {
           title: 'Question 1',
@@ -30,14 +41,15 @@ const Question = () => {
     return (
 
     <div className='main__Question'>
-        <div className="header__Question bg-white">
-          <button className='sticky bg-[#C9F7F5] text-base rounded-md text-[#1BC5BD] py-2 px-5'>Evaluated</button>
+        <div className="header__Question bg-white flex justify-end">
+          <button className='sticky bg-[#C9F7F5] text-base rounded-md text-[#1BC5BD] py-2 px-5' onClick={handleEvaluatedToggle}>Evaluated</button>
         </div>
         <div className="accordion">
             {accordionData.map(({ title, content }) => (
             <Accordion title={title} content={content} />
             ))}
         </div>
+        {showModal && <ConfirmationModal handleEvaluatedToggle = {handleEvaluatedToggle}/>}
     </div>
     )
 }

@@ -48,11 +48,11 @@ const Main = () => {
         setIndexOfFirstRecord(indexOfLastRecord - recordsPerPage);
     }, [indexOfFirstRecord, indexOfLastRecord, currentPage])
   return (
-    <div>
+    <div className="relative h-[100vh]">
         {loading && <CircularProgress />}
         {error && <span>{error}</span>}
-        {evaluationData && currentRecords && 
-        <div className='flex flex-col px-6 py-7'>
+        {!error && evaluationData && currentRecords && 
+        <div className='flex flex-col px-6 py-7 overflow-scroll'>
             <div className='flex flex-row justify-between p-3.5 bg-[#F3F6F9] rounded-lg'>
                 <div className="text-[#212121] text-lg leading-9 font-medium">Evaluations</div>
                 <div>   
@@ -100,7 +100,7 @@ const Main = () => {
                     </tbody>
                 </table>
             </div>
-            <div className="flex flex-row bg-[#F3F6F9] p-2.5 rounded-lg mt-3 justify-between items-center">
+            <div className="flex flex-row bg-[#F3F6F9] p-2.5 rounded-lg mt-3 justify-between items-center absolute left-0 right-0 bottom-0">
                 <span className="text-sm text-[#B5B5C3]">
                     Showing <span className="font-semibold text-[#212121]">{indexOfFirstRecord + 1}</span> to <span className="font-semibold text-[#212121]">{indexOfLastRecord > totalEnteries ? totalEnteries : indexOfLastRecord}</span> of <span className="font-semibold text-[#212121]">{evaluationData.length}</span> Entries
                 </span>
