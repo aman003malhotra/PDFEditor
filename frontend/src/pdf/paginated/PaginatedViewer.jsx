@@ -96,6 +96,7 @@ const PaginatedViewer = props => {
   }
   
   return (
+    <div>
     <div style={{position:"relative", overflow:"hidden"}}>
       <header style={{position:"absolute"}}>
         {/* TODO:DELETE THEM AT THE END */}
@@ -161,6 +162,7 @@ const PaginatedViewer = props => {
       </main>
       {paintToggle ? <PenFunction/> : <Slider />}
         <MarkSheet/>
+    </div>
     </div>
   )
 
