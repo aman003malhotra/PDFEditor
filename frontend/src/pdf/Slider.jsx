@@ -34,21 +34,12 @@ function Slider() {
       return (
         <>
         
-          <div className='fixed flex items-center right-0 bottom-0 left-[220px] bg-white z-10'>
+          <div className='absolute flex items-center right-0 left-0 bottom-0 bg-white z-10'>
             <MdChevronLeft className='opacity-50 cursor-pointer hover:opacity-100' onClick={slideLeft} size={40} />
             <div
               id='slider'
               className='w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide'
             >
-              {/* {data.map((item) => (
-                <div
-                  className='w-[140px] h-[140px] mx-4 inline-block p-2 cursor-pointer rounded-lg hover:scale-105 ease-in-out duration-300 bg-[#6260d1] opacity-[0.49]'
-                  onClick={(i)=>{handleClick(i)}}
-                >
-
-                </div>
-              ))} */}
-
               {
                 pageAr.map(item => (
                   item

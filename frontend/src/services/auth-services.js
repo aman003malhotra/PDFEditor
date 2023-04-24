@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/";
+const API_URL = "https://pdf-editor-b3zz.onrender.com/";
 
 class AuthService {
   login(email, password) {

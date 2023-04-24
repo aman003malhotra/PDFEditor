@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { CgDebug, CgChevronLeft, CgChevronRight, CgArrowsExpandDownRight } from 'react-icons/cg';
+import { BsFillPenFill } from 'react-icons/bs';
 import { RiImageEditFill } from 'react-icons/ri';
 import AnnotatablePage from './AnnotatablePage';
 import { extendTarget } from '../PDFAnnotation';
 import {useDispatch, useSelector} from 'react-redux';
+import Slider from '../Slider'
+import PenFunction from '../PenFunction';
 
 const PaginatedViewer = props => {
 
   const p = useSelector(state=> state.current_page);
   const total_p = useSelector(state=> state.total_pages);
-
+  const paintToggle = useSelector(state=> state.paintToggle);
+  
   const [ page, setPage ] = useState();
 
   const [ debug, setDebug ] = useState(false);
@@ -48,13 +52,26 @@ const PaginatedViewer = props => {
   }
 
   const onToggleRelationsMode = () => {
+    dispatch({type:"PAINT_TOGGLE", payload:false});
     if (annotationMode === 'RELATIONS')
       setAnnotationMode('ANNOTATION');
     else
       setAnnotationMode('RELATIONS'); 
   }
 
+  // TODO:NOT Working fine look into it.
+  const onTogglePaintMode = () => {
+    dispatch({type:"PAINT_TOGGLE", payload:!paintToggle});
+    
+    if(annotationMode === 'PEN'){
+      setAnnotationMode('IMAGE');
+    }else{
+      setAnnotationMode('PEN');
+    }
+  }
+
   const onToggleImageMode = () => {
+    dispatch({type:"PAINT_TOGGLE", payload:false});
     if (annotationMode === 'IMAGE')
       setAnnotationMode('ANNOTATION');
     else
@@ -78,13 +95,14 @@ const PaginatedViewer = props => {
   }
   
   return (
-    <div>
-      <header>
-        <button onClick={() => setDebug(!debug)}>
+    <div style={{position:"relative"}}>
+      <header style={{position:"absolute"}}>
+        {/* TODO:DELETE THEM AT THE END */}
+        {/* <button onClick={() => setDebug(!debug)}>
           <span className="inner">
             <CgDebug />
           </span>
-        </button>
+        </button> */}
 
         <button onClick={onPreviousPage}>
           <span className="inner">
@@ -100,19 +118,27 @@ const PaginatedViewer = props => {
           </span>
         </button>
 
-        <button 
+        {/* <button 
           className={annotationMode === 'RELATIONS' ? 'active' : null} 
           onClick={onToggleRelationsMode}>
           <span className="inner">
             <CgArrowsExpandDownRight />
           </span>
-        </button>
+        </button> */}
 
         <button
           className={annotationMode === 'IMAGE' ? 'active' : null} 
           onClick={onToggleImageMode}>
           <span className="inner">
             <RiImageEditFill />
+          </span>
+        </button>
+
+        <button
+          className={paintToggle ? 'active' : null} 
+          onClick={onTogglePaintMode}>
+          <span className="inner">
+            <BsFillPenFill />
           </span>
         </button>
       </header>
@@ -128,9 +154,11 @@ const PaginatedViewer = props => {
             onCreateAnnotation={onCreateAnnotation}
             onUpdateAnnotation={onUpdateAnnotation}
             onDeleteAnnotation={onDeleteAnnotation} 
-            onCancelSelected={props.onCancelSelected} />
+            onCancelSelected={props.onCancelSelected} 
+            />
         </div>
       </main>
+      {paintToggle ? <PenFunction/> : <Slider />}
     </div>
   )
 

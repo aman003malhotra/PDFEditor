@@ -3,6 +3,8 @@ import * as pdfjs from 'pdfjs-dist/legacy/build/pdf';
 import PDFViewer from './pdf/PDFViewer';
 import annotationService from './services/annotation-service';
 import { API_URL } from './services/annotation-service';
+import Question from './Questions/Question';
+
 const PDFComponent = () => {
 
     const [ annotations, setAnnotations ] = useState();
@@ -21,7 +23,8 @@ const PDFComponent = () => {
     }, []);
   
     return (
-      <PDFViewer 
+      <div className='flex flex-row'>
+        <PDFViewer 
         style={{width:"60%"}}
         mode="scrolling"
         config={{
@@ -32,6 +35,11 @@ const PDFComponent = () => {
         onCreateAnnotation={a => console.log(JSON.stringify(a))} 
         onUpdateAnnotation={(a, b) => console.log(JSON.stringify(a, b))} 
         onDeleteAnnotation={a => console.log(JSON.stringify(a))} />
+        <div style={{flexGrow:1}}>
+          <Question />
+        </div>
+      </div>
+      
     )
   
   }

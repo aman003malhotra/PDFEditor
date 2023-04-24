@@ -15,47 +15,50 @@ import {
 
 //import icons from react icons
 import { FaHistory } from "react-icons/fa";
-import { FiHome, FiLogOut } from "react-icons/fi";
+import { FiHome, FiLogOut, FiArrowLeftCircle, FiArrowRightCircle } from "react-icons/fi";
 import { HiOutlineDocumentReport } from 'react-icons/hi'
 import { IoNewspaperOutline } from 'react-icons/io5'
 import { GiPapers } from 'react-icons/gi'
 import {IoIosPaper} from 'react-icons/io'
 import {CgProfile} from 'react-icons/cg';
-//import sidebar css from react-pro-sidebar module and our custom css 
 import "react-pro-sidebar/dist/css/styles.css";
 
 
 
 const MenuC = () => {
-  
-        //create initial menuCollapse state using useState hook
-        const [menuCollapse, setMenuCollapse] = useState(false);
-        const [username, setUsername] = useState('');
-        const [activeLink, setActiveLink] = useState('');
-        const location = useLocation();
+      const [menuCollapse, setMenuCollapse] = useState(false);
+      const [username, setUsername] = useState('');
+      const [activeLink, setActiveLink] = useState('');
+      const location = useLocation();
 
-        useEffect(() => {
-          setActiveLink(location.pathname);
-        }, [location]);
-        //create a custom function that will change menucollapse state from false to true and true to false
-      // const menuIconClick = () => {
-      //   //condition checking to change state from true to false and vice versa
-      //   menuCollapse ? setMenuCollapse(false) : setMenuCollapse(true);
-      // };
+      useEffect(() => {
+        setActiveLink(location.pathname);
+      }, [location]);
+    
+      
+      const menuIconClick = () => {
+        menuCollapse ? setMenuCollapse(false) : setMenuCollapse(true);
+      };
 
       const handleLogout = () => {
         authServices.logout();
         window.location.href = '/login';
-        return false;
       }
       return (
         <>
           <div id="header">
-            <ProSidebar >
+            <ProSidebar collapsed={menuCollapse}>
               <SidebarHeader>
               <div className="logotext">
-                  <p>PDF Editor Pro</p>
-                </div>
+                <p>{menuCollapse ? "AIK" : "AI Koach"}</p>
+              </div>
+              <div className="closemenu" onClick={menuIconClick}>
+                {menuCollapse ? (
+                  <FiArrowRightCircle/>
+                ) : (
+                  <FiArrowLeftCircle/>
+                )}
+              </div>
               </SidebarHeader>
               <SidebarContent>
                 <Menu iconShape="square">
@@ -63,7 +66,7 @@ const MenuC = () => {
                    <MenuItem className={activeLink === '/listpdf' ? 'active' : ''}  icon={<GiPapers />}><Link to="listpdf">My Papers </Link></MenuItem>
                   <MenuItem className={activeLink === '/addPdf' ? 'active' : ''} icon={<IoIosPaper />}><Link to="addPdf"> Evaluation </Link></MenuItem>
                   <MenuItem icon={<IoNewspaperOutline />}>Re-Evaluation</MenuItem>
-                  <MenuItem icon={<HiOutlineDocumentReport />}>Reports</MenuItem>
+                  <MenuItem icon={<HiOutlineDocumentReport />}><Link to="addnewpdf">Add New PDF</Link></MenuItem>
                   <MenuItem icon={<FaHistory />}>History</MenuItem>
                 </Menu>
               </SidebarContent>

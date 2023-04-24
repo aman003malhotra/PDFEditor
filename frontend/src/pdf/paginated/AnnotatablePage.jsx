@@ -2,16 +2,28 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as PDFJS from 'pdfjs-dist/legacy/build/pdf';
 import { Recogito } from '@recogito/recogito-js/src';
 import { Annotorious } from '@recogito/annotorious/src';
-
+import { useSelector, useDispatch } from 'react-redux';
 import { splitByType } from '../PDFAnnotation';
-
 const AnnotatablePage = props => {
 
   const containerEl = useRef();
 
   const [ anno, setAnno ] = useState();
-
   const [ recogito, setRecogito ] = useState();
+  const [isPainting, setIsPainting] = useState(false);
+  const[startPainting, setStartPainting] = useState(false);
+  const [startX, setStartX] = useState();
+  const [startY, setStartY] = useState();
+  const [historyArr, setHistoryArr] = useState([]);
+  const paintMode = useSelector(state=> state.paintMode);
+  const paintColor = useSelector(state => state.paintColor);
+  const line_width = useSelector(state => state.lineWidth);
+  const paintToggle = useSelector(state => state.paintToggle);
+  const [mouseTime, setMouseTime ] = useState();
+  
+  const dispatch = useDispatch();
+  const history = useSelector(state => state.history);
+  const historyIndex = useSelector(state => state.historyIndex);
 
   // Cleanup previous Recogito instance, canvas + text layer
   const destroyPreviousPage = () => {
@@ -22,12 +34,80 @@ const AnnotatablePage = props => {
     if (anno)
       anno.destroy();
 
-    const canvas = containerEl.current.querySelector('canvas');
+    let canvas = containerEl.current.querySelector('canvas');
     if (canvas)
       containerEl.current.removeChild(canvas);
 
     const textLayer = containerEl.current.querySelector('.textLayer');
     textLayer.innerHTML = '';
+  }
+
+  const debounce = (func, delay) => {
+    let timerId;
+    return function() {
+      const context = this;
+      const args = arguments;
+      clearTimeout(timerId);
+      timerId = setTimeout(() => {
+        func.apply(context, args);
+      }, delay);
+    }
+  }
+
+  function handleMouseDown(e){
+    console.log("mouse clicked")
+    let mouseDownTime = new Date().getTime();
+    setMouseTime(mouseDownTime);
+    setIsPainting(true);
+    if(paintToggle && paintMode && history.length == 0){
+      let canvas  = containerEl.current.querySelector('canvas');
+      let imageData = canvas.toDataURL('image/png', 1.0);
+      console.log(imageData);
+      dispatch({type:"ADD_TO_HISTORY", payload:imageData});
+      dispatch({type:"HISTORY_INDEX_INCREMENT"});
+    }
+    setStartX(e.clientX);
+    setStartY(e.clientY);
+  }
+
+  function handleMouseUp(e){
+    setIsPainting(false);
+    console.log("mouse release")
+    let mouseUpTime =  new Date().getTime();
+    console.log(mouseTime);
+    console.log(mouseUpTime);
+    let timeElapsed
+    if (mouseUpTime && mouseTime) {
+      timeElapsed = mouseUpTime - mouseTime;
+      console.log(`Time elapsed between mouse up and mouse down: ${timeElapsed} milliseconds`);
+    }
+    setMouseTime(null);
+    if(paintMode && paintToggle){
+      let canvas  = containerEl.current.querySelector('canvas');
+      canvas.getContext('2d').stroke();
+      canvas.getContext('2d').beginPath();
+      if(timeElapsed > 300){
+        let imageData = canvas.toDataURL('image/png', 1.0);
+        console.log(imageData);
+        dispatch({type:"ADD_TO_HISTORY", payload:imageData});
+        dispatch({type:"SET_HISTORY_INDEX"});
+      }
+      // console.log(props.page);
+      // localStorage.setItem(props.page.pageIndex, imageData);
+    }
+  }
+
+  const handleMouseMove = (e) => {
+    if(paintMode && paintToggle){
+      if(!isPainting) {
+        return;
+      }
+      let canvas  = containerEl.current.querySelector('canvas');
+      canvas.getContext('2d').lineWidth = line_width;
+      canvas.getContext('2d').lineCap = 'round';
+      canvas.getContext('2d').lineTo(e.clientX -  canvas.getBoundingClientRect().left , e.clientY - canvas.getBoundingClientRect().top);
+      canvas.getContext('2d').stroke();
+    }
   }
 
   // Render on page change
@@ -39,10 +119,17 @@ const AnnotatablePage = props => {
       const viewport = props.page.getViewport({ scale });
 
       const canvas = document.createElement('canvas');
+      // const ctx = canvas.getContext('2d');
+
       canvas.height = viewport.height;
       canvas.width = viewport.width;
+      canvas.getContext('2d').strokeStyle = paintColor;
+      // canvas.getContext('2d').strokeRect(10, 10, 100, 100);
       containerEl.current.appendChild(canvas);
-
+      
+      canvas.addEventListener('mousedown', handleMouseDown);
+      canvas.addEventListener('mousemove', handleMouseMove);
+      canvas.addEventListener('mouseup', handleMouseUp);
       const renderContext = {
         canvasContext: canvas.getContext('2d'),
         viewport
@@ -92,7 +179,28 @@ const AnnotatablePage = props => {
         anno.on('selectAnnotation', () => r.selectAnnotation());
       }));
     }
-  }, [ props.page ]);
+  }, [props.page]);
+
+  useEffect(() => {
+    console.log(historyIndex);
+    console.log(history);
+    let canvas  = containerEl.current.querySelector('canvas');
+    if(canvas){
+      const img = new Image();
+      img.src = history[historyIndex];
+      img.onload = () => {
+        canvas.getContext('2d').drawImage(img, 0, 0);
+      }
+    }
+  }, [historyIndex])
+
+  useEffect(() => {
+    let canvas  = containerEl.current.querySelector('canvas');
+    if(canvas){
+      canvas.getContext('2d').strokeStyle = paintColor;
+    }
+  }, [paintColor]);
+
 
   useEffect(() => {
     // Hack
@@ -102,15 +210,19 @@ const AnnotatablePage = props => {
   }, [ props.annotations ]);
 
   useEffect(() => {
+    console.log(props.annotationMode);
     if (containerEl.current) {
       const imageLayer = containerEl.current.querySelector('svg.a9s-annotationlayer');
       
       if (imageLayer) {
         if (props.annotationMode === 'IMAGE') {
           imageLayer.style.pointerEvents = 'auto';
-        } else {
+        } else if(props.annotationMode === 'ANNOTATION') {
           imageLayer.style.pointerEvents = null;
+          containerEl.current.querySelector('.textLayer').style.pointerEvents = 'auto';
           recogito.setMode(props.annotationMode);
+        }else{
+          containerEl.current.querySelector('.textLayer').style.pointerEvents = null;
         }
       }
     }
@@ -119,7 +231,10 @@ const AnnotatablePage = props => {
   return (
     <div
       ref={containerEl} 
-      className={props.debug ? 'page-container debug' : 'page-container'}>
+      className={props.debug ? 'page-container debug' : 'page-container'}
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp} 
+      onMouseMove={(e) => {handleMouseMove(e)}} >
       <div className="textLayer" />
     </div>
   )
