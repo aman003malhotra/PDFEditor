@@ -121,9 +121,10 @@ header label {
 }
 
 .nopdf{
-  text-align: center;
-  justify-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100% !important ;
-  height:100vh;
+  height:100vh !important;
   font-size: 36px;
 }

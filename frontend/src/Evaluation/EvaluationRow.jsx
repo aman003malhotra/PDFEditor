@@ -11,7 +11,7 @@ const EvaluationRow = ({data}) => {
 
   return (
     <>
-        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+        <tr className="bg-white border-b">
             <th scope="row" className="px-6 py-4 font-font-semibold text-[#464E5F] whitespace-nowrap p-1 flex flex-row items-center">
                 {data.gender === 'male' ? <ManSVG />  : <WomanSVG />}
                 <div className='flex flex-col'>{data.name}<span className='text-[#B5B5C3] text-sm'>{data.exam}</span></div>
