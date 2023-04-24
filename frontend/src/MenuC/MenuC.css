@@ -4,12 +4,13 @@
 } */
 #header .pro-sidebar {
   height: 100vh;
+  z-index:50;
 }
 #header .closemenu {
   color: #FFFFFF;
   position: absolute;
   right: 0;
-  z-index: 9999;
+  z-index: 100;
   line-height: 20px;
   border-radius: 50%;
   font-weight: bold;

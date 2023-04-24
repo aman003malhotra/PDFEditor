@@ -1,0 +1,39 @@
+.up {
+    position:absolute;
+    background-color: #ADA7FF;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 2px;
+    font-size: 14px;
+    top:-41px;
+    font-weight: 700;
+}
+
+.forward{
+    animation-name: slide_up;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+}
+.backward{
+    animation-name: slide_down;
+    animation-duration: 2s;
+    animation-fill-mode: backwards;
+}
+@keyframes slide_up {
+    0%   {
+        bottom: -352;
+    }
+    100% {
+        bottom: 0;
+    }
+}
+
+@keyframes slide_down {
+    0%  {
+        bottom: 0;
+    }
+    100%    {
+        bottom: -352;
+    }
+}

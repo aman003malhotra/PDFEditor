@@ -9,7 +9,7 @@ let initialState = {
     eraseMode:false,
     paintToggle:false,
     historyIndex:0,
-    history:[]
+    history:[],
 }
 
 export default function reducer(currentState= initialState, action){
@@ -69,6 +69,11 @@ export default function reducer(currentState= initialState, action){
             return{
                 ...currentState,
                 historyIndex:currentState.history.length-1,
+            }
+        case "PDF_SELECTED":
+            return{
+                ...currentState,
+                pdfName:action.payload,
             }
         default:
             return currentState

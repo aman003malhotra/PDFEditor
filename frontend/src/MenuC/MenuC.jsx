@@ -62,12 +62,12 @@ const MenuC = () => {
               </SidebarHeader>
               <SidebarContent>
                 <Menu iconShape="square">
-                <Link to="/">  <MenuItem className={activeLink === '/' ? 'active' : ''} icon={<FiHome />}>Home</MenuItem></Link>
-                   <MenuItem className={activeLink === '/listpdf' ? 'active' : ''}  icon={<GiPapers />}><Link to="listpdf">My Papers </Link></MenuItem>
-                  <MenuItem className={activeLink === '/addPdf' ? 'active' : ''} icon={<IoIosPaper />}><Link to="addPdf"> Evaluation </Link></MenuItem>
+                  <MenuItem icon={<FiHome />}>Dashboard</MenuItem>
+                  <hr className='bg-white my-4 mx-2 h-[2px]'/>
+                   <MenuItem className={activeLink === '/' ? 'active' : ''} icon={<IoIosPaper />}><Link to="/">Evaluation</Link></MenuItem> 
                   <MenuItem icon={<IoNewspaperOutline />}>Re-Evaluation</MenuItem>
-                  <MenuItem icon={<HiOutlineDocumentReport />}><Link to="addnewpdf">Add New PDF</Link></MenuItem>
-                  <MenuItem icon={<FaHistory />}>History</MenuItem>
+                  {/* <MenuItem icon={<HiOutlineDocumentReport />}><Link to="addnewpdf">Add New PDF</Link></MenuItem> */}
+                  <MenuItem icon={<FaHistory />}>Meeting Calendar</MenuItem>
                 </Menu>
               </SidebarContent>
               <SidebarFooter>

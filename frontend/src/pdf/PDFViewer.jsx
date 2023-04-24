@@ -10,16 +10,17 @@ import '@recogito/annotorious/dist/annotorious.min.css';
 import './PDFViewer.css';
 import { useDispatch, useSelector } from 'react-redux';
 import PenFunction from './PenFunction';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const store = new Store();
 
 const PDFViewer = props => {
-  
   const paintToggle = useSelector(state => state.paintToggle)
   const [ pdf, setPdf ] = useState();
 
   const [ connections, setConnections ] = useState();
-
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const dispatch = useDispatch();
   // Load PDF on mount
   useEffect(() => {
@@ -28,13 +29,21 @@ const PDFViewer = props => {
       showLabels: true,
       vocabulary: props.config.relationVocabulary
     });
-
+    setLoading(true);
     setConnections(conn);
 
     PDFJS.getDocument(props.url).promise
       .then(
-        pdf => setPdf(pdf), 
-        error => console.error(error)
+        pdf => {
+          setPdf(pdf)
+          dispatch({type:"PDF_SELECTED", payload:pdf});
+          setLoading(false);
+        },
+        error => {
+          console.error(error);
+          setError(error);
+          setLoading(false);
+        }
       );
 
     // Destroy connections layer on unmount
@@ -76,7 +85,7 @@ const PDFViewer = props => {
         onDeleteAnnotation={onDeleteAnnotation} 
         onCancelSelected={onCancelSelected} />
         </>
-    : <div className="nopdf"><div>Please Add a new PDF or select a PDF from My Papers or the selected PDF has a password.Please remove the password before uploading.</div></div>;
+    : <div className="nopdf">{loading && <CircularProgress />}{error && <div>There has been an unusual error from our side, please Try again later</div>}</div>;
 
 }
 

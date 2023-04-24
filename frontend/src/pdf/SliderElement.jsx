@@ -10,7 +10,7 @@ const SliderElement = ({pageNum}) => {
     }
   return (
     <div
-        className='w-[139px] h-[136px] mx-4 inline-block p-2 cursor-pointer rounded-lg ease-in-out duration-300 bg-[#ADA7FF] text-white font-bold'
+        className='w-[100px] h-[100px] mx-4 inline-block p-2 cursor-pointer rounded-lg ease-in-out duration-300 bg-[#ADA7FF] text-white font-bold'
         onClick={()=>{handleClick()}}
     >
         <p className='items-center justify-center'>{pageNum} Page</p>

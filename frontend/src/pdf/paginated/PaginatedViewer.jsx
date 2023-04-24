@@ -7,6 +7,7 @@ import { extendTarget } from '../PDFAnnotation';
 import {useDispatch, useSelector} from 'react-redux';
 import Slider from '../Slider'
 import PenFunction from '../PenFunction';
+import MarkSheet from '../../MarkSheet';
 
 const PaginatedViewer = props => {
 
@@ -59,12 +60,12 @@ const PaginatedViewer = props => {
       setAnnotationMode('RELATIONS'); 
   }
 
-  // TODO:NOT Working fine look into it.
+  // TODO:PEN and annotation working concurrently check into it.
   const onTogglePaintMode = () => {
     dispatch({type:"PAINT_TOGGLE", payload:!paintToggle});
     
     if(annotationMode === 'PEN'){
-      setAnnotationMode('IMAGE');
+      setAnnotationMode('ANNOTATION');
     }else{
       setAnnotationMode('PEN');
     }
@@ -95,7 +96,8 @@ const PaginatedViewer = props => {
   }
   
   return (
-    <div style={{position:"relative"}}>
+    <div>
+    <div style={{position:"relative", overflow:"hidden"}}>
       <header style={{position:"absolute"}}>
         {/* TODO:DELETE THEM AT THE END */}
         {/* <button onClick={() => setDebug(!debug)}>
@@ -159,6 +161,8 @@ const PaginatedViewer = props => {
         </div>
       </main>
       {paintToggle ? <PenFunction/> : <Slider />}
+        <MarkSheet/>
+    </div>
     </div>
   )
 

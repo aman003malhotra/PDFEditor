@@ -19,7 +19,7 @@
 } */
 
 .accordion {
-  max-width: 600px;
+  /* max-width: 600px; */
   margin: 2rem auto;
 }
 
@@ -62,4 +62,8 @@
 .accordion-title{
   border-radius: 8px;
   margin: 10px;
+}
+
+.modalCSS{
+  background:rgba(70, 78, 95, 0.74);
 }

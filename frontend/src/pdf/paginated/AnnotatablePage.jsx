@@ -115,7 +115,7 @@ const AnnotatablePage = props => {
     destroyPreviousPage();
 
     if (props.page) {
-      const scale = props.scale || 1.8;
+      const scale = props.scale || 1.5;
       const viewport = props.page.getViewport({ scale });
 
       const canvas = document.createElement('canvas');
@@ -217,12 +217,9 @@ const AnnotatablePage = props => {
       if (imageLayer) {
         if (props.annotationMode === 'IMAGE') {
           imageLayer.style.pointerEvents = 'auto';
-        } else if(props.annotationMode === 'ANNOTATION') {
+        } else {
           imageLayer.style.pointerEvents = null;
-          containerEl.current.querySelector('.textLayer').style.pointerEvents = 'auto';
           recogito.setMode(props.annotationMode);
-        }else{
-          containerEl.current.querySelector('.textLayer').style.pointerEvents = null;
         }
       }
     }

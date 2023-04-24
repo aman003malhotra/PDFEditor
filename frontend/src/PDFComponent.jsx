@@ -4,11 +4,11 @@ import PDFViewer from './pdf/PDFViewer';
 import annotationService from './services/annotation-service';
 import { API_URL } from './services/annotation-service';
 import Question from './Questions/Question';
-
+import { useSelector } from 'react-redux';
 const PDFComponent = () => {
 
     const [ annotations, setAnnotations ] = useState();
-
+    const pdf = useSelector(state => state.pdfName);
     useEffect(() => {
       let filename = localStorage.getItem('selected_pdf');
       const arr_annotation = []
@@ -30,14 +30,14 @@ const PDFComponent = () => {
         config={{
           relationVocabulary: ['located_at', 'observed_at']
         }}
-        url= {API_URL+localStorage.getItem('selected_pdf')} 
+        url={localStorage.getItem('selected_pdf')} 
         annotations={annotations} 
         onCreateAnnotation={a => console.log(JSON.stringify(a))} 
         onUpdateAnnotation={(a, b) => console.log(JSON.stringify(a, b))} 
         onDeleteAnnotation={a => console.log(JSON.stringify(a))} />
-        <div style={{flexGrow:1}}>
+        {pdf && <div style={{flexGrow:1}}>
           <Question />
-        </div>
+        </div>}
       </div>
       
     )
